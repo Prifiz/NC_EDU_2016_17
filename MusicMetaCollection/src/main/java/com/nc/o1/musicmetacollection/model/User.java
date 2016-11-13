@@ -91,11 +91,21 @@ public class User {
     //need to test
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof User)) {
+        if (this==object) {
+            return true;
+        }
+        if (object==null) {
+            return false;
+        }
+        if (getClass()!=object.getClass()) {
             return false;
         }
         User other = (User) object;
-        if ((this.email == null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
+        if(!this.username.equalsIgnoreCase(other.username)){
+            return false;
+        }
+        
+        if(!this.email.equalsIgnoreCase(other.email)){
             return false;
         }
         return true;
@@ -103,8 +113,13 @@ public class User {
 
     @Override
     public int hashCode() {
-        //need to realize
-        return super.hashCode(); //To change body of generated methods, choose Tools | Templates.
+        int hash=37;
+      hash=hash*4+this.username.hashCode();
+      hash=hash*4+this.email.hashCode();
+      hash=hash*4+this.password.hashCode();
+      
+      
+      return hash;
     }
 
 }
