@@ -91,21 +91,21 @@ public class User {
     //need to test
     @Override
     public boolean equals(Object object) {
-        if (this==object) {
+        if (this == object) {
             return true;
         }
-        if (object==null) {
+        if (object == null) {
             return false;
         }
-        if (getClass()!=object.getClass()) {
+        if (getClass() != object.getClass()) {
             return false;
         }
         User other = (User) object;
-        if(!this.username.equalsIgnoreCase(other.username)){
+        if (!this.username.equalsIgnoreCase(other.username)) {
             return false;
         }
-        
-        if(!this.email.equalsIgnoreCase(other.email)){
+
+        if (!this.email.equalsIgnoreCase(other.email)) {
             return false;
         }
         return true;
@@ -113,13 +113,11 @@ public class User {
 
     @Override
     public int hashCode() {
-        int hash=37;
-      hash=hash*4+this.username.hashCode();
-      hash=hash*4+this.email.hashCode();
-      hash=hash*4+this.password.hashCode();
-      
-      
-      return hash;
+        int hash = 37;
+        hash = hash * 4 + this.username.hashCode();
+        hash = hash * 4 + this.email.hashCode();
+        hash = hash * 4 + this.password.hashCode();
+        return hash;
     }
 
 }
