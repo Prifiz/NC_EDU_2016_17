@@ -24,6 +24,13 @@ public class CommonInfo {
         this.title = title;
     }
 
+    public CommonInfo(Artist artist, String title, AlbumInfo albumInfo) {
+        this();
+        this.artist = artist;
+        this.title = title;
+        this.albumInfo = albumInfo;
+    }
+
     public CommonInfo(Artist artist, String title, int year) {
         this();
         this.artist = artist;

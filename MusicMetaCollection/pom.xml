@@ -15,7 +15,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.nc.o1.musicmetacollection.Main</mainClass>
+                            <mainClass>com.nc.o1.musicmetacollection.view.Hello</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

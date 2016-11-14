@@ -11,7 +11,7 @@ import com.nc.o1.musicmetacollection.model.CommonInfo;
 import com.nc.o1.musicmetacollection.model.Composer;
 import com.nc.o1.musicmetacollection.model.TechnicalInfo;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
-import static com.nc.o1.musicmetacollection.view.Swing.mainFrame;
+import static com.nc.o1.musicmetacollection.view.Hello.mainFrame;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -49,7 +49,7 @@ public class TrackDialog extends JFrame {
         final JTextField artist = jtext();
         artist.setLocation(312, 130);
         lab = lab();
-        lab.setLocation(260, 130);
+        lab.setLocation(264, 130);
         lab.setText("Артист");
         panel.add(artist);
         panel.add(lab);
@@ -112,7 +112,7 @@ public class TrackDialog extends JFrame {
         bpm.setLocation(312, 340);
         bpm.setText("");
         lab = lab();
-        lab.setLocation(280, 340);
+        lab.setLocation(277, 340);
         lab.setText("Bpm");
         panel.add(bpm);
         panel.add(lab);
@@ -135,14 +135,14 @@ public class TrackDialog extends JFrame {
         panel.add(key);
         panel.add(lab);
 
-        JButton add =  new JButton("Добавить");
+        JButton add = new JButton("Добавить");
         add.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 TrackInfo track = null;
-                if (!artist.getText().isEmpty() && !title.getText().isEmpty()) {
+                if (!artist.getText().isEmpty() && !title.getText().isEmpty() && !album.getText().isEmpty()) {
 
-                    if (!album.getText().isEmpty() && !genre.getText().isEmpty() && !year.getText().isEmpty()) {
+                    if (!genre.getText().isEmpty() && !year.getText().isEmpty()) {
 
                         if (!cover.getText().isEmpty() && !latency.getText().isEmpty()) {
 
@@ -184,14 +184,13 @@ public class TrackDialog extends JFrame {
                         track = new TrackInfo(
                                 new CommonInfo(
                                         new Artist(artist.getText()),
-                                        title.getText()),
+                                        title.getText(),
+                                        new AlbumInfo(album.getText())),
                                 new TechnicalInfo());
                     }
                 }
 
-                mainFrame.setTrack(track);
-                System.out.println(track.toString());
-                System.out.println(mainFrame.getTrack().toString());
+                mainFrame.updateTrackList(track);
                 mainFrame.setVisible(false);
                 mainFrame.setResizable(false);
                 dispose();
@@ -214,7 +213,7 @@ public class TrackDialog extends JFrame {
     JTextField jtext() {
 
         JTextField ftf = new JTextField(10);
-        ftf.setSize(140, 20);
+        ftf.setSize(140, 30);
         return ftf;
 
     }
@@ -227,8 +226,4 @@ public class TrackDialog extends JFrame {
 
     }
 
-    private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
-        
-    }
-    
 }

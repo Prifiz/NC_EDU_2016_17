@@ -11,21 +11,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -35,7 +25,7 @@ public class MainFrame extends JFrame {
 
     TrackInfo track;
     TrackList allTracks;
-    String[][] data = new String[10][3];
+    String[][] data = new String[20][3];
     JTable table;
     //Массив, содержащий заголовки таблицы
     Object[] headers = {"Исполнитель", "Название", "Альбом"};
@@ -68,13 +58,11 @@ public class MainFrame extends JFrame {
             }
         });
         JButton add = new JButton("Добавить");
-        add.addActionListener(new ActionListener() {
+        add.addActionListener(new java.awt.event.ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                TrackDialog addForm = new TrackDialog();
-                addForm.setVisible(true);
-                addForm.setResizable(false);
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtActionPerformed(evt);
             }
         });
         show.setBackground(Color.white);
@@ -100,7 +88,6 @@ public class MainFrame extends JFrame {
     }
 
     private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
-        allTracks.addTrackInfo(track);
         //создаем модель на основе полученного массива книг
         TrackListTableModel model = new TrackListTableModel(allTracks);
         // и применяем ее к таблице
@@ -111,9 +98,18 @@ public class MainFrame extends JFrame {
         }
     }
 
-    public TrackList trackList(TrackInfo track) {
-        allTracks.addTrackInfo(track);
-        return allTracks;
+    private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
+        dispose();
+        TrackDialog addForm = new TrackDialog();
+        addForm.setVisible(true);
+        addForm.setResizable(false);
+    }
+
+    public void updateTrackList(TrackInfo track) {
+        if (track != null) {
+            allTracks.addTrackInfo(track);
+            track = null;
+        }
     }
 
     public TrackInfo getTrack() {
