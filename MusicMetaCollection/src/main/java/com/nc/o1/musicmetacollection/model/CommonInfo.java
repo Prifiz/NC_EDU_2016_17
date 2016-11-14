@@ -18,6 +18,12 @@ public class CommonInfo {
         year = 0;
     }
 
+    public CommonInfo(Artist artist, String title) {
+        this();
+        this.artist = artist;
+        this.title = title;
+    }
+
     public CommonInfo(Artist artist, String title, int year) {
         this();
         this.artist = artist;
