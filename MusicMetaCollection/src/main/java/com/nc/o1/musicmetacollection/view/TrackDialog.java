@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nc.o1.musicmetacollection.view;
 
 import com.nc.o1.musicmetacollection.model.AlbumInfo;
@@ -17,24 +12,22 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
+ * Describes the window for addition new track.
  *
  * @author Слава
  */
-public class TrackDialog extends JFrame {
+public class TrackDialog extends javax.swing.JDialog {
 
     private javax.swing.JTextField artist;
 
-    TrackDialog() {
-
-        super("AddTrack");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    public TrackDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        this.setTitle("MusicMetaCollection - New track");
         JPanel panel = new JPanel();
         panel.setBackground(Color.lightGray);
         panel.setLayout(null);
@@ -50,7 +43,7 @@ public class TrackDialog extends JFrame {
         artist.setLocation(312, 130);
         lab = lab();
         lab.setLocation(264, 130);
-        lab.setText("Артист");
+        lab.setText("Artist");
         panel.add(artist);
         panel.add(lab);
 
@@ -59,7 +52,7 @@ public class TrackDialog extends JFrame {
         title.setText("");
         lab = lab();
         lab.setLocation(246, 160);
-        lab.setText("Название");
+        lab.setText("Title");
         panel.add(title);
         panel.add(lab);
 
@@ -68,7 +61,7 @@ public class TrackDialog extends JFrame {
         composer.setText("");
         lab = lab();
         lab.setLocation(234, 190);
-        lab.setText("Композитор");
+        lab.setText("Composer");
         panel.add(composer);
         panel.add(lab);
 
@@ -77,7 +70,7 @@ public class TrackDialog extends JFrame {
         album.setText("");
         lab = lab();
         lab.setLocation(258, 220);
-        lab.setText("Альбом");
+        lab.setText("Album");
         panel.add(album);
         panel.add(lab);
 
@@ -86,7 +79,7 @@ public class TrackDialog extends JFrame {
         genre.setText("");
         lab = lab();
         lab.setLocation(270, 250);
-        lab.setText("Жанр");
+        lab.setText("Genre");
         panel.add(genre);
         panel.add(lab);
 
@@ -95,7 +88,7 @@ public class TrackDialog extends JFrame {
         cover.setText("");
         lab = lab();
         lab.setLocation(250, 280);
-        lab.setText("Обложка");
+        lab.setText("Cover");
         panel.add(cover);
         panel.add(lab);
 
@@ -104,7 +97,7 @@ public class TrackDialog extends JFrame {
         year.setText("");
         lab = lab();
         lab.setLocation(280, 310);
-        lab.setText("Год");
+        lab.setText("Year");
         panel.add(year);
         panel.add(lab);
 
@@ -122,7 +115,7 @@ public class TrackDialog extends JFrame {
         latency.setText("");
         lab = lab();
         lab.setLocation(184, 370);
-        lab.setText("Продолжительность");
+        lab.setText("Duration");
         panel.add(latency);
         panel.add(lab);
 
@@ -131,11 +124,11 @@ public class TrackDialog extends JFrame {
         key.setText("");
         lab = lab();
         lab.setLocation(229, 400);
-        lab.setText("Тональность");
+        lab.setText("Key");
         panel.add(key);
         panel.add(lab);
 
-        JButton add = new JButton("Добавить");
+        JButton add = new JButton("Add");
         add.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -223,7 +216,6 @@ public class TrackDialog extends JFrame {
         lab.setBackground(Color.white);
         lab.setSize(140, 20);
         return lab;
-
     }
 
 }

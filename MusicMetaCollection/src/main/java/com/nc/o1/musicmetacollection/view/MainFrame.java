@@ -99,10 +99,9 @@ public class MainFrame extends JFrame {
     }
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
-        dispose();
-        TrackDialog addForm = new TrackDialog();
-        addForm.setVisible(true);
-        addForm.setResizable(false);
+        TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
+        newTrack.setLocationRelativeTo(this);
+        newTrack.setVisible(true);
     }
 
     public void updateTrackList(TrackInfo track) {
