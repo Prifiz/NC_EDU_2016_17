@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class Composer {
+import java.io.Serializable;
+
+public class Composer implements Serializable {
 
     String name;
 

@@ -11,11 +11,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,7 +35,7 @@ public class MainFrame extends JFrame {
     private final JMenuBar topMenu;
 
     private final JMenu fileMenu, fileSaveMenu, fileLoadMenu;
-
+    private JFileChooser fileChooser = new JFileChooser();
     private final JMenuItem fileSaveXML, fileSaveSrlz;
     private final JMenuItem fileLoadXML, fileLoadSrlz;
 
@@ -72,6 +78,12 @@ public class MainFrame extends JFrame {
         fileSaveMenu.add(fileSaveXML);
 
         fileSaveSrlz = new JMenuItem("Serialized file...");
+        fileSaveSrlz.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serializeActionPerformed(evt);
+            }
+        });
         fileSaveMenu.add(fileSaveSrlz);
 
         fileMenu.addSeparator();
@@ -142,6 +154,22 @@ public class MainFrame extends JFrame {
 
     private void fileExitActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
+    }
+
+    private void serializeToFile() {
+        if (this.fileChooser.showSaveDialog(this) == 0) {
+            try {
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.fileChooser.getSelectedFile().getAbsoluteFile() + ".bin"));
+                out.writeObject(allTracks);
+                out.close();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "File could not be write", "Error", 0);
+            }
+        }
+    }
+
+    private void serializeActionPerformed(java.awt.event.ActionEvent evt) {
+        this.serializeToFile();
     }
 
     private void showBtActionPerformed(java.awt.event.ActionEvent evt) {

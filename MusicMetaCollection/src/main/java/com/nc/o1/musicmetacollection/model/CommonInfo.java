@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class CommonInfo {
+import java.io.Serializable;
+
+public class CommonInfo implements Serializable {
 
     private Artist artist;
     private Composer composer;

@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class AlbumInfo {
+import java.io.Serializable;
+
+public class AlbumInfo implements Serializable {
 
     String album;
     String cover;

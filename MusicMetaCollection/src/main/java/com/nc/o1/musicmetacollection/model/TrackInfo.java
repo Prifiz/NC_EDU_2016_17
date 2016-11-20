@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class TrackInfo {
+import java.io.Serializable;
+
+public class TrackInfo implements Serializable {
 
     private CommonInfo commonInfo;
     private TechnicalInfo technicalInfo;

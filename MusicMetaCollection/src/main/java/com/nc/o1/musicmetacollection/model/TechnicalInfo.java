@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class TechnicalInfo {
+import java.io.Serializable;
+
+public class TechnicalInfo implements Serializable {
 
     private int beatsPerMinute;
     private int latency;
