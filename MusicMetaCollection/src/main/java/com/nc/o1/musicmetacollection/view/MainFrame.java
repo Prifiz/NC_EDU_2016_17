@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
     private JFileChooser fileChooser = new JFileChooser();
     private final JMenuItem fileSaveXML, fileSaveSrlz;
     private final JMenuItem fileLoadXML, fileLoadSrlz;
-
+    private final JMenuItem helpMenu;
     private final JMenuItem fileExit;
 
     TrackList allTracks, newTracks;
@@ -102,6 +102,14 @@ public class MainFrame extends JFrame {
             }
         });
         fileSaveMenu.add(fileSaveSrlz);
+        
+        helpMenu=new JMenuItem("Help");
+        helpMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                showHelp(evt);
+            }
+        });
+        fileMenu.add(helpMenu);
 
         fileMenu.addSeparator();
         fileExit = new JMenuItem("Exit");
@@ -262,6 +270,17 @@ public class MainFrame extends JFrame {
         if (track != null) {
             allTracks.addTrackInfo(track);
             track = null;
+        }
+    }
+    
+    public void showHelp(java.awt.event.ActionEvent evt){
+        try {
+            HelpDialog newTrack = new HelpDialog(this, rootPaneCheckingEnabled);
+            newTrack.setLocationRelativeTo(this);
+            newTrack.setVisible(true);
+        } catch (java.text.ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
         }
     }
 }
