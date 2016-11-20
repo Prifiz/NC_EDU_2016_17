@@ -115,7 +115,7 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(year);
         panel.add(labyear);
 
-        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("######"));
+        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("###"));
         bpm.setSize(70, 30);
         bpm.setLocation(450, 310);
         bpm.setText("");
@@ -238,9 +238,10 @@ public class TrackDialog extends javax.swing.JDialog {
                                 new TechnicalInfo());
                     }
                 }
-
-                mainFrame.updateFullTrackList(track);
-                mainFrame.showNewTrack(track);
+                if (track != null) {
+                    mainFrame.updateFullTrackList(track);
+                    mainFrame.showNewTrack(track);
+                }
                 mainFrame.setVisible(false);
                 mainFrame.setResizable(false);
                 dispose();
