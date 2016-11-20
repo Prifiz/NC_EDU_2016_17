@@ -34,12 +34,12 @@ public class MainFrame extends JFrame {
     private final JMenuItem fileLoadXML, fileLoadSrlz;
 
     private final JMenuItem fileExit;
-    TrackInfo track;
-    TrackList allTracks;
-    String[][] data = new String[20][3];
+
+    TrackList allTracks, newTracks;
+    String[][] data = new String[20][2];
     JTable table;
     //Массив, содержащий заголовки таблицы
-    Object[] headers = {"Исполнитель", "Название", "Альбом"};
+    Object[] headers = {"Artist", "Title"};
 
     /**
      * Creates Main Window.
@@ -84,9 +84,10 @@ public class MainFrame extends JFrame {
                 fileExitActionPerformed(evt);
             }
         });
-        
+
         allTracks = new TrackList();
-        
+        newTracks = new TrackList();
+
         frame.setLayout(new BorderLayout());
 
         Color color = frame.getBackground();
@@ -103,14 +104,14 @@ public class MainFrame extends JFrame {
         table.setBackground(color);
         JPanel btnPnl = new JPanel(new BorderLayout());
         JPanel bottombtnPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton show = new JButton("Показать");
+        JButton show = new JButton("Show All");
         show.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showBtActionPerformed(evt);
             }
         });
-        JButton add = new JButton("Добавить");
+        JButton add = new JButton("Add Track");
         add.addActionListener(new java.awt.event.ActionListener() {
 
             @Override
@@ -131,7 +132,7 @@ public class MainFrame extends JFrame {
         frame.add(table, BorderLayout.CENTER);
         frame.add(btnPnl, BorderLayout.SOUTH);
 
-        frame.setTitle("ViewAll");
+        frame.setTitle("Music Library - MusicMetaCollection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setVisible(true);
@@ -144,7 +145,7 @@ public class MainFrame extends JFrame {
     }
 
     private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
-        //создаем модель на основе полученного массива книг
+        //создаем модель на основе полученного треклиста
         TrackListTableModel model = new TrackListTableModel(allTracks);
         // и применяем ее к таблице
         table.setModel(model);
@@ -155,28 +156,29 @@ public class MainFrame extends JFrame {
     }
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
+        try {
             TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
             newTrack.setLocationRelativeTo(this);
             newTrack.setVisible(true);
         } catch (java.text.ParseException exc) {
             System.err.println("formatter is bad: " + exc.getMessage());
             System.exit(-1);
-        }   
+        }
     }
 
-    public void updateTrackList(TrackInfo track) {
+    public void showNewTrack(TrackInfo track) {
+        newTracks.addTrackInfo(track);
+        TrackListTableModel model = new TrackListTableModel(newTracks);
+        table.setModel(model);
+        if (model.getRowCount() > 0) {
+            table.setRowSelectionInterval(0, 0);
+        }
+    }
+
+    public void updateFullTrackList(TrackInfo track) {
         if (track != null) {
             allTracks.addTrackInfo(track);
             track = null;
         }
-    }
-
-    public TrackInfo getTrack() {
-        return track;
-    }
-
-    public void setTrack(TrackInfo track) {
-        this.track = track;
     }
 }

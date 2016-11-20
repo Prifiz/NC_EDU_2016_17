@@ -19,18 +19,16 @@ public class TrackListTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 2;
     }
 
     @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Исполнитель";
+                return "Artist";
             case 1:
-                return "Название";
-            case 2:
-                return "Альбом";
+                return "Title";
         }
         return "";
     }
@@ -41,8 +39,6 @@ public class TrackListTableModel extends AbstractTableModel {
             case 0:
                 return String.class;
             case 1:
-                return String.class;
-            case 2:
                 return String.class;
         }
         return String.class;
@@ -61,8 +57,6 @@ public class TrackListTableModel extends AbstractTableModel {
                 return track.getCommonInfo().getArtist().getName();
             case 1:
                 return track.getCommonInfo().getTitle();
-            case 2:
-                return track.getCommonInfo().getAlbumInfo().getAlbum();
         }
         return "";
     }
@@ -74,10 +68,7 @@ public class TrackListTableModel extends AbstractTableModel {
             case 0:
                 track.getCommonInfo().getArtist().setName((String) aValue);
             case 1:
-                track.getCommonInfo().setTitle((String) aValue);
-            case 2:
-                track.getCommonInfo().getAlbumInfo().setAlbum((String) aValue);
-                
+                track.getCommonInfo().setTitle((String) aValue);                
         }
         fireTableCellUpdated(rowIndex, columnIndex);
     }

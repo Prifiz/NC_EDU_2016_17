@@ -33,7 +33,7 @@ public class TrackDialog extends javax.swing.JDialog {
 
     public TrackDialog(java.awt.Frame parent, boolean modal) throws ParseException {
         super(parent, modal);
-        this.setTitle("MusicMetaCollection - New track");
+        this.setTitle("New Track - MusicMetaCollection");
         JPanel panel = new JPanel();
         panel.setBackground(Color.lightGray);
         panel.setLayout(null);
@@ -42,7 +42,6 @@ public class TrackDialog extends javax.swing.JDialog {
         JButton button = new JButton();
 
 //        JLabel lab = new JLabel();
-
         Font font = new Font("Times New Roman", Font.LAYOUT_LEFT_TO_RIGHT, 25);
 
         final JTextField artist = jtext();
@@ -153,8 +152,8 @@ public class TrackDialog extends javax.swing.JDialog {
         labkey.setText("Key");
         panel.add(key);
         panel.add(labkey);
-        
-        JButton showAll= new JButton("Advanced");
+
+        JButton showAll = new JButton("Advanced");
         showAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 composer.setVisible(true);
@@ -185,57 +184,65 @@ public class TrackDialog extends javax.swing.JDialog {
 
             public void actionPerformed(ActionEvent e) {
                 TrackInfo track = null;
-                if (!artist.getText().isEmpty() && !title.getText().isEmpty() && !album.getText().isEmpty()) {
+                if (!artist.getText().isEmpty() && !title.getText().isEmpty()) {
+                    if (!album.getText().isEmpty()) {
+                        if (!genre.getText().isEmpty() && !year.getText().isEmpty()) {
 
-                    if (!genre.getText().isEmpty() && !year.getText().isEmpty()) {
+                            if (!cover.getText().isEmpty() && !latency.getText().isEmpty()) {
 
-                        if (!cover.getText().isEmpty() && !latency.getText().isEmpty()) {
-
-                            if (!composer.getText().isEmpty() && !bpm.getText().isEmpty() && !key.getText().isEmpty()) {
-                                track = new TrackInfo(
-                                        new CommonInfo(
-                                                new Artist(artist.getText()),
-                                                new Composer(composer.getText()),
-                                                title.getText(),
-                                                new AlbumInfo(album.getText(), cover.getText()),
-                                                genre.getText(),
-                                                Integer.parseInt(year.getText())),
-                                        new TechnicalInfo(
-                                                Integer.parseInt(bpm.getText()),
-                                                latency.getText(),
-                                                key.getText(), false));
+                                if (!composer.getText().isEmpty() && !bpm.getText().isEmpty() && !key.getText().isEmpty()) {
+                                    track = new TrackInfo(
+                                            new CommonInfo(
+                                                    new Artist(artist.getText()),
+                                                    new Composer(composer.getText()),
+                                                    title.getText(),
+                                                    new AlbumInfo(album.getText(), cover.getText()),
+                                                    genre.getText(),
+                                                    Integer.parseInt(year.getText())),
+                                            new TechnicalInfo(
+                                                    Integer.parseInt(bpm.getText()),
+                                                    latency.getText(),
+                                                    key.getText(), false));
+                                } else {
+                                    track = new TrackInfo(
+                                            new CommonInfo(
+                                                    new Artist(artist.getText()),
+                                                    title.getText(),
+                                                    new AlbumInfo(album.getText(), cover.getText()),
+                                                    genre.getText(),
+                                                    Integer.parseInt(year.getText())),
+                                            new TechnicalInfo(
+                                                    latency.getText(), false));
+                                }
                             } else {
                                 track = new TrackInfo(
                                         new CommonInfo(
                                                 new Artist(artist.getText()),
                                                 title.getText(),
-                                                new AlbumInfo(album.getText(), cover.getText()),
+                                                new AlbumInfo(album.getText()),
                                                 genre.getText(),
                                                 Integer.parseInt(year.getText())),
-                                        new TechnicalInfo(
-                                                latency.getText(), false));
+                                        new TechnicalInfo());
                             }
                         } else {
                             track = new TrackInfo(
                                     new CommonInfo(
                                             new Artist(artist.getText()),
                                             title.getText(),
-                                            new AlbumInfo(album.getText()),
-                                            genre.getText(),
-                                            Integer.parseInt(year.getText())),
+                                            new AlbumInfo(album.getText())),
                                     new TechnicalInfo());
                         }
                     } else {
                         track = new TrackInfo(
                                 new CommonInfo(
                                         new Artist(artist.getText()),
-                                        title.getText(),
-                                        new AlbumInfo(album.getText())),
+                                        title.getText()),
                                 new TechnicalInfo());
                     }
                 }
 
-                mainFrame.updateTrackList(track);
+                mainFrame.updateFullTrackList(track);
+                mainFrame.showNewTrack(track);
                 mainFrame.setVisible(false);
                 mainFrame.setResizable(false);
                 dispose();
@@ -262,8 +269,6 @@ public class TrackDialog extends javax.swing.JDialog {
         return ftf;
 
     }
-    
-
 
     JLabel lab() {
         JLabel lab = new JLabel("");
