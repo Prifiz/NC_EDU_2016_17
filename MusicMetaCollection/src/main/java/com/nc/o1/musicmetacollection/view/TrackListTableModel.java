@@ -89,6 +89,7 @@ public class TrackListTableModel extends AbstractTableModel {
         if (rowIndex >= 0 && rowIndex < trackList.getSize()) {
             trackList.removeTrackInfo(rowIndex);
             fireTableDataChanged();
+            
         }        
     }
 

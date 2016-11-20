@@ -38,7 +38,7 @@ public class Hello extends JFrame {
         label.setSize(300, 150);
         label.setLocation(321, 200);
         panel.add(label);
-        JButton button = new JButton("Далее");
+        JButton button = new JButton("Next");
         button.setBackground(Color.white);
         button.setSize(80, 30);
         button.setLocation(312, 520);

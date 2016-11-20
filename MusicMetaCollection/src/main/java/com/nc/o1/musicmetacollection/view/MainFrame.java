@@ -55,12 +55,12 @@ public class MainFrame extends JFrame {
     JTable table;
     //Массив, содержащий заголовки таблицы
   //  Object[] headers = {"Artist", "Title"};
-
+  JFrame frame;
     /**
      * Creates Main Window.
      */
     public MainFrame() {
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         //<editor-fold defaultstate="collapsed" desc="topMenu">
         topMenu = new JMenuBar();
         frame.setJMenuBar(topMenu);
@@ -157,10 +157,21 @@ public class MainFrame extends JFrame {
                 addBtActionPerformed(evt);
             }
         });
+        
+         JButton del = new JButton("Delete Track");
+        del.addActionListener(new java.awt.event.ActionListener() {
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtActionPerformed(evt);
+            }
+        });
         show.setBackground(Color.white);
         add.setBackground(Color.white);
+        del.setBackground(Color.white);
         bottombtnPnl.add(show);
         bottombtnPnl.add(add);
+        bottombtnPnl.add(del);
 
         btnPnl.add(bottombtnPnl, BorderLayout.CENTER);
 
@@ -176,6 +187,11 @@ public class MainFrame extends JFrame {
         frame.setVisible(true);
         frame.setSize(700, 600);
         frame.setResizable(false);
+        
+        frame.setVisible(true);
+        frame.setSize(700, 600);
+        frame.setResizable(false);
+        
     }
 
     private void fileExitActionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,9 +274,17 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        TrackListTableModel tltm = (TrackListTableModel)table.getModel();
+        tltm.removeRow(table.getSelectedRow());
+        table.setModel(tltm);
+        
+        
+    }
     public void showNewTrack(TrackInfo track) {
-        newTracks.addTrackInfo(track);
-        TrackListTableModel model = new TrackListTableModel(newTracks);
+        //newTracks.addTrackInfo(track);
+        TrackListTableModel model = new TrackListTableModel(allTracks);
         table.setModel(model);
         if (model.getRowCount() > 0) {
             table.setRowSelectionInterval(0, 0);
