@@ -1,9 +1,10 @@
 package com.nc.o1.musicmetacollection.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrackList {
+public class TrackList implements Serializable {
 
     private List<TrackInfo> tracks;
 
@@ -13,10 +14,6 @@ public class TrackList {
 
     public void addTrackInfo(TrackInfo trackInfo) {
         tracks.add(trackInfo);
-    }
-
-    public void addTrackInfo(int index, TrackInfo trackInfo) {
-        tracks.add(index, trackInfo);
     }
 
     public TrackInfo getTrackInfo(int index) {

@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class CommonInfo {
+import java.io.Serializable;
+
+public class CommonInfo implements Serializable {
 
     private Artist artist;
     private Composer composer;
@@ -135,10 +137,14 @@ public class CommonInfo {
         sb.append(albumInfo.toString());
         sb.append("\nНазвание: ");
         sb.append(title);
-        sb.append("\nГод: ");
-        sb.append(year);
-        sb.append("\nЖанр: ");
-        sb.append(genre);
+        if (year != 0) {
+            sb.append("\nГод: ");
+            sb.append(year);
+        }
+        if (!genre.isEmpty()) {
+            sb.append("\nЖанр: ");
+            sb.append(genre);
+        }
         sb.append(composer.toString());
         return String.valueOf(sb);
     }

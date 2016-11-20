@@ -1,6 +1,8 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class TechnicalInfo {
+import java.io.Serializable;
+
+public class TechnicalInfo implements Serializable {
 
     private int beatsPerMinute;
     private int latency;
@@ -138,8 +140,10 @@ public class TechnicalInfo {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nДлительность: ");
-        sb.append(this.getStringLatency());
+        if (latency != 0) {
+            sb.append("\nДлительность: ");
+            sb.append(this.getStringLatency());
+        }
         if (beatsPerMinute != 0) {
             sb.append("\nУдаров в минуту: ");
             sb.append(beatsPerMinute);

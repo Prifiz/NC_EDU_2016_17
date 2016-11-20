@@ -1,8 +1,10 @@
 package com.nc.o1.musicmetacollection.model;
 
-public class Composer {
+import java.io.Serializable;
 
-    String name;
+public class Composer implements Serializable {
+
+    private String name;
 
     public Composer() {
         name = "";
@@ -32,7 +34,7 @@ public class Composer {
             return false;
         }
         Artist other = (Artist) obj;
-        if (!name.equals(other.name)) {
+        if (!name.equals(other.getName())) {
             return false;
         }
         return true;

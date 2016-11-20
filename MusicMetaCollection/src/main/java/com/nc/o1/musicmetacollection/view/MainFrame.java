@@ -11,14 +11,29 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -29,23 +44,24 @@ public class MainFrame extends JFrame {
     private final JMenuBar topMenu;
 
     private final JMenu fileMenu, fileSaveMenu, fileLoadMenu;
-
+    private JFileChooser fileChooser = new JFileChooser();
     private final JMenuItem fileSaveXML, fileSaveSrlz;
     private final JMenuItem fileLoadXML, fileLoadSrlz;
 
     private final JMenuItem fileExit;
-    TrackInfo track;
-    TrackList allTracks;
-    String[][] data = new String[20][3];
+
+    TrackList allTracks, newTracks;
+    String[][] data = new String[20][2];
     JTable table;
     //Массив, содержащий заголовки таблицы
-    Object[] headers = {"Исполнитель", "Название", "Альбом"};
+    Object[] headers = {"Artist", "Title"};
 
     /**
      * Creates Main Window.
      */
     public MainFrame() {
         JFrame frame = new JFrame();
+        //<editor-fold defaultstate="collapsed" desc="topMenu">
         topMenu = new JMenuBar();
         frame.setJMenuBar(topMenu);
 
@@ -59,10 +75,17 @@ public class MainFrame extends JFrame {
         fileMenu.add(fileLoadMenu);
 
         fileLoadXML = new JMenuItem("XML file...");
-        fileLoadSrlz = new JMenuItem("Serialized file...");
         fileLoadMenu.add(fileLoadXML);
-        fileLoadMenu.add(fileLoadSrlz);
 
+        fileLoadSrlz = new JMenuItem("Serialized file...");
+        fileLoadMenu.add(fileLoadSrlz);
+        fileLoadSrlz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileLoadSrlzActiionPerformed(e);
+            }
+
+        });
         //Create sub-menu of File - Save
         fileSaveMenu = new JMenu("Save as");
         //Add sub-menu of File - Save
@@ -72,6 +95,12 @@ public class MainFrame extends JFrame {
         fileSaveMenu.add(fileSaveXML);
 
         fileSaveSrlz = new JMenuItem("Serialized file...");
+        fileSaveSrlz.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serializeActionPerformed(evt);
+            }
+        });
         fileSaveMenu.add(fileSaveSrlz);
 
         fileMenu.addSeparator();
@@ -84,9 +113,10 @@ public class MainFrame extends JFrame {
                 fileExitActionPerformed(evt);
             }
         });
-        
+        //</editor-fold>
         allTracks = new TrackList();
-        
+        newTracks = new TrackList();
+
         frame.setLayout(new BorderLayout());
 
         Color color = frame.getBackground();
@@ -103,14 +133,14 @@ public class MainFrame extends JFrame {
         table.setBackground(color);
         JPanel btnPnl = new JPanel(new BorderLayout());
         JPanel bottombtnPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton show = new JButton("Показать");
+        JButton show = new JButton("Show All");
         show.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showBtActionPerformed(evt);
             }
         });
-        JButton add = new JButton("Добавить");
+        JButton add = new JButton("Add Track");
         add.addActionListener(new java.awt.event.ActionListener() {
 
             @Override
@@ -131,7 +161,7 @@ public class MainFrame extends JFrame {
         frame.add(table, BorderLayout.CENTER);
         frame.add(btnPnl, BorderLayout.SOUTH);
 
-        frame.setTitle("ViewAll");
+        frame.setTitle("Music Library - MusicMetaCollection");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setVisible(true);
@@ -143,8 +173,62 @@ public class MainFrame extends JFrame {
         System.exit(0);
     }
 
+    private void serializeToFile() {
+        if (this.fileChooser.showSaveDialog(this) == 0) {
+            try {
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.fileChooser.getSelectedFile().getAbsoluteFile() + ".bin"));
+                out.writeObject(allTracks);
+                out.close();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "File could not be write", "Error", 0);
+            }
+        }
+    }
+
+    private void serializeActionPerformed(java.awt.event.ActionEvent evt) {
+        this.serializeToFile();
+    }
+
+    private void fileLoadSrlzActiionPerformed(ActionEvent e) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+               return file.isDirectory() || file.getAbsolutePath().endsWith(".bin");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Binary files (*.bin)";
+            }
+        });
+        int ret = chooser.showOpenDialog(topMenu);
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            FileInputStream fis;
+            try {
+                fis = new FileInputStream(chooser.getSelectedFile().getAbsoluteFile());
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                allTracks = (TrackList) ois.readObject();
+                TrackListTableModel model = new TrackListTableModel(allTracks);
+                // и применяем ее к таблице
+                table.setModel(model);
+                //делаем первую строку выделенной
+                if (model.getRowCount() > 0) {
+                    table.setRowSelectionInterval(0, 0);
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Incorrect file", "Exception", 2);
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        }
+    }
+
     private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
-        //создаем модель на основе полученного массива книг
+        //создаем модель на основе полученного треклиста
         TrackListTableModel model = new TrackListTableModel(allTracks);
         // и применяем ее к таблице
         table.setModel(model);
@@ -155,28 +239,29 @@ public class MainFrame extends JFrame {
     }
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
+        try {
             TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
             newTrack.setLocationRelativeTo(this);
             newTrack.setVisible(true);
         } catch (java.text.ParseException exc) {
             System.err.println("formatter is bad: " + exc.getMessage());
             System.exit(-1);
-        }   
+        }
     }
 
-    public void updateTrackList(TrackInfo track) {
+    public void showNewTrack(TrackInfo track) {
+        newTracks.addTrackInfo(track);
+        TrackListTableModel model = new TrackListTableModel(newTracks);
+        table.setModel(model);
+        if (model.getRowCount() > 0) {
+            table.setRowSelectionInterval(0, 0);
+        }
+    }
+
+    public void updateFullTrackList(TrackInfo track) {
         if (track != null) {
             allTracks.addTrackInfo(track);
             track = null;
         }
-    }
-
-    public TrackInfo getTrack() {
-        return track;
-    }
-
-    public void setTrack(TrackInfo track) {
-        this.track = track;
     }
 }

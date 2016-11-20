@@ -25,7 +25,7 @@ public class Hello extends JFrame {
 
     public Hello() {
 
-        super("MusicApp");
+        super("Start Page - MusicMetaCollection");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.setBackground(Color.lightGray);
