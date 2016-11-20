@@ -155,9 +155,14 @@ public class MainFrame extends JFrame {
     }
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
-        TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
-        newTrack.setLocationRelativeTo(this);
-        newTrack.setVisible(true);
+        try{
+            TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
+            newTrack.setLocationRelativeTo(this);
+            newTrack.setVisible(true);
+        } catch (java.text.ParseException exc) {
+            System.err.println("formatter is bad: " + exc.getMessage());
+            System.exit(-1);
+        }   
     }
 
     public void updateTrackList(TrackInfo track) {

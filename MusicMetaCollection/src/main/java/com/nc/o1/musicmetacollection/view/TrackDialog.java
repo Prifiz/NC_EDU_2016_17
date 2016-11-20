@@ -11,10 +11,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 /**
  * Describes the window for addition new track.
@@ -25,7 +31,7 @@ public class TrackDialog extends javax.swing.JDialog {
 
     private javax.swing.JTextField artist;
 
-    public TrackDialog(java.awt.Frame parent, boolean modal) {
+    public TrackDialog(java.awt.Frame parent, boolean modal) throws ParseException {
         super(parent, modal);
         this.setTitle("MusicMetaCollection - New track");
         JPanel panel = new JPanel();
@@ -35,98 +41,144 @@ public class TrackDialog extends javax.swing.JDialog {
         JTextField tf = new JTextField();
         JButton button = new JButton();
 
-        JLabel lab = new JLabel();
+//        JLabel lab = new JLabel();
 
         Font font = new Font("Times New Roman", Font.LAYOUT_LEFT_TO_RIGHT, 25);
 
         final JTextField artist = jtext();
-        artist.setLocation(312, 130);
-        lab = lab();
-        lab.setLocation(264, 130);
-        lab.setText("Artist");
+        artist.setLocation(100, 70);
+        JLabel labart = lab();
+        labart.setLocation(60, 70);
+        labart.setText("Artist");
         panel.add(artist);
-        panel.add(lab);
+        panel.add(labart);
 
         final JTextField title = jtext();
-        title.setLocation(312, 160);
+        title.setLocation(450, 70);
         title.setText("");
-        lab = lab();
-        lab.setLocation(246, 160);
-        lab.setText("Title");
+        JLabel labtitle = lab();
+        labtitle.setLocation(410, 70);
+        labtitle.setText("Title");
         panel.add(title);
-        panel.add(lab);
+        panel.add(labtitle);
 
         final JTextField composer = jtext();
-        composer.setLocation(312, 190);
+        composer.setLocation(100, 190);
         composer.setText("");
-        lab = lab();
-        lab.setLocation(234, 190);
-        lab.setText("Composer");
+        composer.setVisible(false);
+        final JLabel labcomposer = lab();
+        labcomposer.setVisible(false);
+        labcomposer.setLocation(30, 190);
+        labcomposer.setText("Composer");
         panel.add(composer);
-        panel.add(lab);
+        panel.add(labcomposer);
 
         final JTextField album = jtext();
-        album.setLocation(312, 220);
+        album.setLocation(450, 190);
         album.setText("");
-        lab = lab();
-        lab.setLocation(258, 220);
-        lab.setText("Album");
+        album.setVisible(false);
+        final JLabel labalbum = lab();
+        labalbum.setVisible(false);
+        labalbum.setLocation(410, 190);
+        labalbum.setText("Album");
         panel.add(album);
-        panel.add(lab);
+        panel.add(labalbum);
 
         final JTextField genre = jtext();
-        genre.setLocation(312, 250);
+        genre.setLocation(100, 250);
         genre.setText("");
-        lab = lab();
-        lab.setLocation(270, 250);
-        lab.setText("Genre");
+        genre.setVisible(false);
+        final JLabel labgenre = lab();
+        labgenre.setVisible(false);
+        labgenre.setLocation(60, 250);
+        labgenre.setText("Genre");
         panel.add(genre);
-        panel.add(lab);
+        panel.add(labgenre);
 
         final JTextField cover = jtext();
-        cover.setLocation(312, 280);
+        cover.setLocation(450, 250);
         cover.setText("");
-        lab = lab();
-        lab.setLocation(250, 280);
-        lab.setText("Cover");
+        cover.setVisible(false);
+        final JLabel labcover = lab();
+        labcover.setVisible(false);
+        labcover.setLocation(410, 250);
+        labcover.setText("Cover");
         panel.add(cover);
-        panel.add(lab);
+        panel.add(labcover);
 
-        final JTextField year = jtext();
-        year.setLocation(312, 310);
+        final JFormattedTextField year = new JFormattedTextField(new MaskFormatter("####"));
+        year.setSize(140, 30);
+        year.setLocation(100, 310);
+        year.setVisible(false);
         year.setText("");
-        lab = lab();
-        lab.setLocation(280, 310);
-        lab.setText("Year");
+        final JLabel labyear = lab();
+        labyear.setVisible(false);
+        labyear.setLocation(60, 310);
+        labyear.setText("Year");
         panel.add(year);
-        panel.add(lab);
+        panel.add(labyear);
 
-        final JTextField bpm = jtext();
-        bpm.setLocation(312, 340);
+        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("######"));
+        bpm.setSize(140, 30);
+        bpm.setLocation(450, 310);
         bpm.setText("");
-        lab = lab();
-        lab.setLocation(277, 340);
-        lab.setText("Bpm");
+        bpm.setVisible(false);
+        final JLabel labbpm = lab();
+        labbpm.setVisible(false);
+        labbpm.setLocation(410, 310);
+        labbpm.setText("Bpm");
         panel.add(bpm);
-        panel.add(lab);
+        panel.add(labbpm);
 
-        final JTextField latency = jtext();
-        latency.setLocation(312, 370);
+        final JFormattedTextField latency = new JFormattedTextField(new SimpleDateFormat("mm:ss"));
+        latency.setSize(140, 30);
+        latency.setLocation(100, 370);
         latency.setText("");
-        lab = lab();
-        lab.setLocation(184, 370);
-        lab.setText("Duration");
+        latency.setVisible(false);
+        final JLabel lablatency = lab();
+        lablatency.setVisible(false);
+        lablatency.setLocation(40, 370);
+        lablatency.setText("Duration");
         panel.add(latency);
-        panel.add(lab);
+        panel.add(lablatency);
 
-        final JTextField key = jtext();
-        key.setLocation(312, 400);
+        final JTextField key = new JFormattedTextField(new MaskFormatter("?"));
+        key.setSize(140, 30);
+        key.setLocation(450, 370);
         key.setText("");
-        lab = lab();
-        lab.setLocation(229, 400);
-        lab.setText("Key");
+        key.setVisible(false);
+        final JLabel labkey = lab();
+        labkey.setVisible(false);
+        labkey.setLocation(410, 370);
+        labkey.setText("Key");
         panel.add(key);
-        panel.add(lab);
+        panel.add(labkey);
+        
+        JButton showAll= new JButton("Advanced");
+        showAll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                composer.setVisible(true);
+                labcomposer.setVisible(true);
+                album.setVisible(true);
+                labalbum.setVisible(true);
+                genre.setVisible(true);
+                labgenre.setVisible(true);
+                cover.setVisible(true);
+                labcover.setVisible(true);
+                year.setVisible(true);
+                labyear.setVisible(true);
+                bpm.setVisible(true);
+                labbpm.setVisible(true);
+                latency.setVisible(true);
+                lablatency.setVisible(true);
+                key.setVisible(true);
+                labkey.setVisible(true);
+            }
+        });
+        showAll.setBackground(Color.white);
+        showAll.setSize(100, 30);
+        showAll.setLocation(470, 130);
+        panel.add(showAll);
 
         JButton add = new JButton("Add");
         add.addActionListener(new ActionListener() {
@@ -210,6 +262,8 @@ public class TrackDialog extends javax.swing.JDialog {
         return ftf;
 
     }
+    
+
 
     JLabel lab() {
         JLabel lab = new JLabel("");
