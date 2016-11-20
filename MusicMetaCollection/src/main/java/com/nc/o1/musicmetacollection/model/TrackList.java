@@ -16,10 +16,6 @@ public class TrackList implements Serializable {
         tracks.add(trackInfo);
     }
 
-    public void addTrackInfo(int index, TrackInfo trackInfo) {
-        tracks.add(index, trackInfo);
-    }
-
     public TrackInfo getTrackInfo(int index) {
         return tracks.get(index);
     }

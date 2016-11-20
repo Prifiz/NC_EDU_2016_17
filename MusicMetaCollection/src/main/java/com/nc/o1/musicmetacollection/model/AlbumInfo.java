@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class AlbumInfo implements Serializable {
 
-    String album;
-    String cover;
+    private String album;
+    private String cover;
 
     public AlbumInfo() {
         album = "";

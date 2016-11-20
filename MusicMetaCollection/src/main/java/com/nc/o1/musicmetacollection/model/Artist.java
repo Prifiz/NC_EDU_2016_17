@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Artist implements Serializable {
 
-    String name;
+    private String name;
 
     public Artist() {
         name = "";

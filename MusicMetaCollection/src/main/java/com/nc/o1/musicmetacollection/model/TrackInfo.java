@@ -21,22 +21,6 @@ public class TrackInfo implements Serializable {
         this.technicalInfo = technicalInfo;
     }
 
-//    public TrackInfo(Artist artist, String title, int year, int latency) {
-//        commonInfo = new CommonInfo(artist, title, year);
-//        technicalInfo = new TechnicalInfo(latency);
-//    }
-//    public TrackInfo(Artist artist, String title, String album, String genre, int year, int latency) {
-//        commonInfo = new CommonInfo(artist, title, new AlbumInfo(album), genre, year);
-//        technicalInfo = new TechnicalInfo(latency);
-//    }
-//    public TrackInfo(Artist artist, Composer composer, String title, String album, String genre, String cover, int year, int latency) {
-//        commonInfo = new CommonInfo(artist, composer, title, album, genre, cover, year);
-//        technicalInfo = new TechnicalInfo(latency);
-//    }
-//    public TrackInfo(String artist, String composer, String title, String album, String genre, String cover, int year, int bpm, String stringLatency) {
-//        commonInfo = new CommonInfo(artist, composer, title, album, genre, cover, year);
-//        technicalInfo = new TechnicalInfo(bpm, stringLatency);
-//    }
     public CommonInfo getCommonInfo() {
         return commonInfo;
     }

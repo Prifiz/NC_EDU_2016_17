@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Composer implements Serializable {
 
-    String name;
+    private String name;
 
     public Composer() {
         name = "";
@@ -34,7 +34,7 @@ public class Composer implements Serializable {
             return false;
         }
         Artist other = (Artist) obj;
-        if (!name.equals(other.name)) {
+        if (!name.equals(other.getName())) {
             return false;
         }
         return true;
