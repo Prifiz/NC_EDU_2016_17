@@ -51,10 +51,10 @@ public class MainFrame extends JFrame {
     private final JMenuItem fileExit;
 
     TrackList allTracks, newTracks;
-    String[][] data = new String[20][2];
+  //  String[][] data = new String[20][2];
     JTable table;
     //Массив, содержащий заголовки таблицы
-    Object[] headers = {"Artist", "Title"};
+  //  Object[] headers = {"Artist", "Title"};
 
     /**
      * Creates Main Window.
@@ -129,7 +129,8 @@ public class MainFrame extends JFrame {
 
         Color color = frame.getBackground();
         //Создаем новую таблицу на основе двумерного массива данных и заголовков
-        table = new JTable(data, headers);
+        TrackListTableModel tltm = new TrackListTableModel(allTracks);
+        table = new JTable(tltm);
         //Создаем панель прокрутки и включаем в ее состав нашу таблицу
         JScrollPane jscrlp = new JScrollPane(table);
         //Устаналиваем размеры прокручиваемой области
