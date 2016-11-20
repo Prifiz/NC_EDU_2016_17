@@ -11,8 +11,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JButton;
@@ -107,7 +105,7 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(labcover);
 
         final JFormattedTextField year = new JFormattedTextField(new MaskFormatter("####"));
-        year.setSize(140, 30);
+        year.setSize(70, 30);
         year.setLocation(100, 310);
         year.setVisible(false);
         year.setText("");
@@ -119,7 +117,7 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(labyear);
 
         final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("######"));
-        bpm.setSize(140, 30);
+        bpm.setSize(70, 30);
         bpm.setLocation(450, 310);
         bpm.setText("");
         bpm.setVisible(false);
