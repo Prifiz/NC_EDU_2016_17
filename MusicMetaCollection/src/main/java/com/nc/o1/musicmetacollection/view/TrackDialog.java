@@ -13,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -102,12 +104,17 @@ public class TrackDialog extends javax.swing.JDialog {
         labcover.setText("Cover");
         panel.add(cover);
         panel.add(labcover);
+        
+        Calendar calend=Calendar.getInstance();
+        String [] years=new String[calend.get(Calendar.YEAR)-1899];
+        for (int i = 0; i < years.length; i++) {
+            years[i]=""+(1900+i);
+        }
 
-        final JFormattedTextField year = new JFormattedTextField(new MaskFormatter("####"));
+        final JComboBox year = new JComboBox (years);
         year.setSize(70, 30);
         year.setLocation(100, 310);
         year.setVisible(false);
-        year.setText("");
         final JLabel labyear = lab();
         labyear.setVisible(false);
         labyear.setLocation(60, 310);
@@ -115,7 +122,7 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(year);
         panel.add(labyear);
 
-        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("###"));
+        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("#####"));
         bpm.setSize(70, 30);
         bpm.setLocation(450, 310);
         bpm.setText("");
@@ -127,10 +134,11 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(bpm);
         panel.add(labbpm);
 
-        final JFormattedTextField latency = new JFormattedTextField(new SimpleDateFormat("mm:ss"));
+        
+        
+        final JFormattedTextField latency =new JFormattedTextField(new SimpleDateFormat("HH:mm:ss"));
         latency.setSize(140, 30);
         latency.setLocation(100, 370);
-        latency.setText("");
         latency.setVisible(false);
         final JLabel lablatency = lab();
         lablatency.setVisible(false);
@@ -138,11 +146,15 @@ public class TrackDialog extends javax.swing.JDialog {
         lablatency.setText("Duration");
         panel.add(latency);
         panel.add(lablatency);
+        
+        String[] keys={"C","a","F","d","G","e","B","g","D","h","Es","c","A",
+            "fis","As","f","E","cis","Des","b","H","gis","Ges","es","Fis","dis",
+            "Ces","as","Cis","ais"};
+        
 
-        final JTextField key = new JFormattedTextField(new MaskFormatter("?"));
+        final JComboBox key = new JComboBox(keys);
         key.setSize(140, 30);
         key.setLocation(450, 370);
-        key.setText("");
         key.setVisible(false);
         final JLabel labkey = lab();
         labkey.setVisible(false);
@@ -184,11 +196,11 @@ public class TrackDialog extends javax.swing.JDialog {
                 TrackInfo track = null;
                 if (!artist.getText().isEmpty() && !title.getText().isEmpty()) {
                     if (!album.getText().isEmpty()) {
-                        if (!genre.getText().isEmpty() && !year.getText().isEmpty()) {
+                        if (!genre.getText().isEmpty() && !((String)year.getSelectedItem()).isEmpty()) {
 
                             if (!cover.getText().isEmpty() && !latency.getText().isEmpty()) {
 
-                                if (!composer.getText().isEmpty() && !bpm.getText().isEmpty() && !key.getText().isEmpty()) {
+                                if (!composer.getText().isEmpty() && !bpm.getText().isEmpty() && !((String)key.getSelectedItem()).isEmpty()) {
                                     track = new TrackInfo(
                                             new CommonInfo(
                                                     new Artist(artist.getText()),
@@ -196,11 +208,11 @@ public class TrackDialog extends javax.swing.JDialog {
                                                     title.getText(),
                                                     new AlbumInfo(album.getText(), cover.getText()),
                                                     genre.getText(),
-                                                    Integer.parseInt(year.getText())),
+                                                    Integer.parseInt((String)year.getSelectedItem())),
                                             new TechnicalInfo(
                                                     Integer.parseInt(bpm.getText()),
                                                     latency.getText(),
-                                                    key.getText(), false));
+                                                    (String)key.getSelectedItem(), false));
                                 } else {
                                     track = new TrackInfo(
                                             new CommonInfo(
@@ -208,7 +220,7 @@ public class TrackDialog extends javax.swing.JDialog {
                                                     title.getText(),
                                                     new AlbumInfo(album.getText(), cover.getText()),
                                                     genre.getText(),
-                                                    Integer.parseInt(year.getText())),
+                                                    Integer.parseInt((String)year.getSelectedItem())),
                                             new TechnicalInfo(
                                                     latency.getText(), false));
                                 }
@@ -219,7 +231,7 @@ public class TrackDialog extends javax.swing.JDialog {
                                                 title.getText(),
                                                 new AlbumInfo(album.getText()),
                                                 genre.getText(),
-                                                Integer.parseInt(year.getText())),
+                                                Integer.parseInt((String)year.getSelectedItem())),
                                         new TechnicalInfo());
                             }
                         } else {

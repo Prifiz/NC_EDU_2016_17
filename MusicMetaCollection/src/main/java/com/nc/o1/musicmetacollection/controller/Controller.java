@@ -1,7 +1,7 @@
 package com.nc.o1.musicmetacollection.controller;
 
+import com.nc.o1.musicmetacollection.view.MainFrame;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -27,5 +27,9 @@ public class Controller {
         
         reader.close();
         return filetext;  
+    }
+    
+    public static void parseXML(String path, MainFrame frame){
+        
     }
 }
