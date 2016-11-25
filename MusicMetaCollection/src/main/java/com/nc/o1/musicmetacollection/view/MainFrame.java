@@ -13,6 +13,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -33,7 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -51,11 +53,12 @@ public class MainFrame extends JFrame {
     private final JMenuItem fileExit;
 
     TrackList allTracks, newTracks;
-  //  String[][] data = new String[20][2];
+    //  String[][] data = new String[20][2];
     JTable table;
     //Массив, содержащий заголовки таблицы
-  //  Object[] headers = {"Artist", "Title"};
-  JFrame frame;
+    //  Object[] headers = {"Artist", "Title"};
+    JFrame frame;
+
     /**
      * Creates Main Window.
      */
@@ -102,10 +105,10 @@ public class MainFrame extends JFrame {
             }
         });
         fileSaveMenu.add(fileSaveSrlz);
-        
-        helpMenu=new JMenuItem("Help");
+
+        helpMenu = new JMenuItem("Help");
         helpMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt){
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showHelp(evt);
             }
         });
@@ -157,8 +160,8 @@ public class MainFrame extends JFrame {
                 addBtActionPerformed(evt);
             }
         });
-        
-         JButton del = new JButton("Delete Track");
+
+        JButton del = new JButton("Delete Track");
         del.addActionListener(new java.awt.event.ActionListener() {
 
             @Override
@@ -187,11 +190,17 @@ public class MainFrame extends JFrame {
         frame.setVisible(true);
         frame.setSize(700, 600);
         frame.setResizable(false);
-        
+
         frame.setVisible(true);
         frame.setSize(700, 600);
         frame.setResizable(false);
-        
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                editTrackMouseDoubleClick(evt);
+            }
+        });
     }
 
     private void fileExitActionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +228,7 @@ public class MainFrame extends JFrame {
         chooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File file) {
-               return file.isDirectory() || file.getAbsolutePath().endsWith(".bin");
+                return file.isDirectory() || file.getAbsolutePath().endsWith(".bin");
             }
 
             @Override
@@ -248,7 +257,7 @@ public class MainFrame extends JFrame {
             } catch (ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Incorrect file", "Exception", 2);
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-           }
+            }
         }
     }
 
@@ -274,14 +283,21 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void editTrackMouseDoubleClick(MouseEvent evt){
+        int selectedRow = table.getSelectedRow();        
+        if (selectedRow != -1 && evt.getClickCount() == 2) {
+            TrackListTableModel tModel = (TrackListTableModel) table.getModel();
+            //TrackDialog editTrack= new TrackDialog(this, rootPaneCheckingEnabled);
+            JOptionPane.showMessageDialog(rootPane, "Test");
+        }
+    }
+
     private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {
-        
-        TrackListTableModel tltm = (TrackListTableModel)table.getModel();
+        TrackListTableModel tltm = (TrackListTableModel) table.getModel();
         tltm.removeRow(table.getSelectedRow());
         table.setModel(tltm);
-        
-        
     }
+
     public void showNewTrack(TrackInfo track) {
         //newTracks.addTrackInfo(track);
         TrackListTableModel model = new TrackListTableModel(allTracks);
@@ -297,8 +313,8 @@ public class MainFrame extends JFrame {
             track = null;
         }
     }
-    
-    public void showHelp(java.awt.event.ActionEvent evt){
+
+    public void showHelp(java.awt.event.ActionEvent evt) {
         try {
             HelpDialog newTrack = new HelpDialog(this, rootPaneCheckingEnabled);
             newTrack.setLocationRelativeTo(this);

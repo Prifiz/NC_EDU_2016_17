@@ -1,5 +1,6 @@
 package com.nc.o1.musicmetacollection.view;
 
+import com.nc.o1.musicmetacollection.controller.AddTrackController;
 import com.nc.o1.musicmetacollection.model.AlbumInfo;
 import com.nc.o1.musicmetacollection.model.Artist;
 import com.nc.o1.musicmetacollection.model.CommonInfo;
@@ -8,7 +9,6 @@ import com.nc.o1.musicmetacollection.model.TechnicalInfo;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
 import static com.nc.o1.musicmetacollection.view.Hello.mainFrame;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -18,9 +18,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 
 /**
  * Describes the window for addition new track.
@@ -29,243 +29,191 @@ import javax.swing.text.MaskFormatter;
  */
 public class TrackDialog extends javax.swing.JDialog {
 
-    private javax.swing.JTextField artist;
+    private static final String APP_TITLE = "MusicMetaCollection";
+
+    private javax.swing.JTextField artistInput;
+    private javax.swing.JTextField titleInput;
+    private javax.swing.JTextField genreInput;
+    private javax.swing.JTextField composerInput;
+    private javax.swing.JTextField albumInput;
+    private javax.swing.JTextField coverPathInput;
+    //Specific Controls
+    private javax.swing.JTextField bpmInput;
+    private javax.swing.JTextField latencyInput;
+    private String year;
+
+    public JTextField getArtistInput() {
+        return artistInput;
+    }
+
+    public JTextField getTitleInput() {
+        return titleInput;
+    }
 
     public TrackDialog(java.awt.Frame parent, boolean modal) throws ParseException {
         super(parent, modal);
-        this.setTitle("New Track - MusicMetaCollection");
+        //if(existTrack==null){
+        setTitle("New Track - MusicMetaCollection");
+//        else{
+//           this.setTitle("Edit Track - MusicMetaCollection"); 
+//        }
         JPanel panel = new JPanel();
         panel.setBackground(Color.lightGray);
         panel.setLayout(null);
 
-        JTextField tf = new JTextField();
-        JButton button = new JButton();
+        artistInput = createTextField();
+        artistInput.setLocation(100, 70);
+        final JLabel artistLabel = createLabel();
+        artistLabel.setLocation(60, 70);
+        artistLabel.setText("Artist");
+        panel.add(artistInput);
+        panel.add(artistLabel);
 
-//        JLabel lab = new JLabel();
-        Font font = new Font("Times New Roman", Font.LAYOUT_LEFT_TO_RIGHT, 25);
+        titleInput = createTextField();
+        titleInput.setLocation(450, 70);
+        final JLabel titleLabel = createLabel();
+        titleLabel.setLocation(410, 70);
+        titleLabel.setText("Title");
+        panel.add(titleInput);
+        panel.add(titleLabel);
 
-        final JTextField artist = jtext();
-        artist.setLocation(100, 70);
-        JLabel labart = lab();
-        labart.setLocation(60, 70);
-        labart.setText("Artist");
-        panel.add(artist);
-        panel.add(labart);
+        composerInput = createTextField();
+        composerInput.setLocation(100, 190);
+        composerInput.setVisible(false);
+        final JLabel composerLabel = createLabel();
+        composerLabel.setVisible(false);
+        composerLabel.setLocation(30, 190);
+        composerLabel.setText("Composer");
+        panel.add(composerInput);
+        panel.add(composerLabel);
 
-        final JTextField title = jtext();
-        title.setLocation(450, 70);
-        title.setText("");
-        JLabel labtitle = lab();
-        labtitle.setLocation(410, 70);
-        labtitle.setText("Title");
-        panel.add(title);
-        panel.add(labtitle);
+        albumInput = createTextField();
+        albumInput.setLocation(450, 190);
+        albumInput.setVisible(false);
+        final JLabel albumLabel = createLabel();
+        albumLabel.setVisible(false);
+        albumLabel.setLocation(410, 190);
+        albumLabel.setText("Album");
+        panel.add(albumInput);
+        panel.add(albumLabel);
 
-        final JTextField composer = jtext();
-        composer.setLocation(100, 190);
-        composer.setText("");
-        composer.setVisible(false);
-        final JLabel labcomposer = lab();
-        labcomposer.setVisible(false);
-        labcomposer.setLocation(30, 190);
-        labcomposer.setText("Composer");
-        panel.add(composer);
-        panel.add(labcomposer);
+        genreInput = createTextField();
+        genreInput.setLocation(100, 250);
+        genreInput.setVisible(false);
+        final JLabel genreLabel = createLabel();
+        genreLabel.setVisible(false);
+        genreLabel.setLocation(60, 250);
+        genreLabel.setText("Genre");
+        panel.add(genreInput);
+        panel.add(genreLabel);
 
-        final JTextField album = jtext();
-        album.setLocation(450, 190);
-        album.setText("");
-        album.setVisible(false);
-        final JLabel labalbum = lab();
-        labalbum.setVisible(false);
-        labalbum.setLocation(410, 190);
-        labalbum.setText("Album");
-        panel.add(album);
-        panel.add(labalbum);
+        coverPathInput = createTextField();
+        coverPathInput.setLocation(450, 250);
+        coverPathInput.setVisible(false);
+        final JLabel coverPathLabel = createLabel();
+        coverPathLabel.setVisible(false);
+        coverPathLabel.setLocation(410, 250);
+        coverPathLabel.setText("Cover");
+        panel.add(coverPathInput);
+        panel.add(coverPathLabel);
 
-        final JTextField genre = jtext();
-        genre.setLocation(100, 250);
-        genre.setText("");
-        genre.setVisible(false);
-        final JLabel labgenre = lab();
-        labgenre.setVisible(false);
-        labgenre.setLocation(60, 250);
-        labgenre.setText("Genre");
-        panel.add(genre);
-        panel.add(labgenre);
-
-        final JTextField cover = jtext();
-        cover.setLocation(450, 250);
-        cover.setText("");
-        cover.setVisible(false);
-        final JLabel labcover = lab();
-        labcover.setVisible(false);
-        labcover.setLocation(410, 250);
-        labcover.setText("Cover");
-        panel.add(cover);
-        panel.add(labcover);
-        
-        Calendar calend=Calendar.getInstance();
-        String [] years=new String[calend.get(Calendar.YEAR)-1899];
+        Calendar calend = Calendar.getInstance();
+        String[] years = new String[calend.get(Calendar.YEAR) - 1899];
         for (int i = 0; i < years.length; i++) {
-            years[i]=""+(1900+i);
+            years[i] = "" + (1900 + i);
         }
+        //need to do something with year.How does it save?
+        final JComboBox yearComboBox = new JComboBox(years);
+        yearComboBox.setSize(70, 30);
+        yearComboBox.setLocation(100, 310);
+        yearComboBox.setVisible(false);
+        final JLabel yearLabel = createLabel();
+        yearLabel.setVisible(false);
+        yearLabel.setLocation(60, 310);
+        yearLabel.setText("Year");
+        panel.add(yearComboBox);
+        panel.add(yearLabel);
 
-        final JComboBox year = new JComboBox (years);
-        year.setSize(70, 30);
-        year.setLocation(100, 310);
-        year.setVisible(false);
-        final JLabel labyear = lab();
-        labyear.setVisible(false);
-        labyear.setLocation(60, 310);
-        labyear.setText("Year");
-        panel.add(year);
-        panel.add(labyear);
+//        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("#####"));]
+//        bpm.setSize(70, 30);
+        bpmInput = createTextField();
+        bpmInput.setLocation(450, 310);
+        bpmInput.setVisible(false);
+        final JLabel bpmLabel = createLabel();
+        bpmLabel.setVisible(false);
+        bpmLabel.setLocation(410, 310);
+        bpmLabel.setText("BPM");
+        panel.add(bpmInput);
+        panel.add(bpmLabel);
 
-        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("#####"));
-        bpm.setSize(70, 30);
-        bpm.setLocation(450, 310);
-        bpm.setText("");
-        bpm.setVisible(false);
-        final JLabel labbpm = lab();
-        labbpm.setVisible(false);
-        labbpm.setLocation(410, 310);
-        labbpm.setText("Bpm");
-        panel.add(bpm);
-        panel.add(labbpm);
+// final JFormattedTextField latencyInput = new JFormattedTextField(new SimpleDateFormat("HH:mm:ss"));
+//        latency = createTextField();
+//        latency.setSize(140, 30);
+        latencyInput = createTextField();
+        latencyInput.setLocation(100, 370);
+        latencyInput.setVisible(false);
+        final JLabel latencyLabel = createLabel();
+        latencyLabel.setVisible(false);
+        latencyLabel.setLocation(40, 370);
+        latencyLabel.setText("Duration");
+        panel.add(latencyInput);
+        panel.add(latencyLabel);
 
-        
-        
-        final JFormattedTextField latency =new JFormattedTextField(new SimpleDateFormat("HH:mm:ss"));
-        latency.setSize(140, 30);
-        latency.setLocation(100, 370);
-        latency.setVisible(false);
-        final JLabel lablatency = lab();
-        lablatency.setVisible(false);
-        lablatency.setLocation(40, 370);
-        lablatency.setText("Duration");
-        panel.add(latency);
-        panel.add(lablatency);
-        
-        String[] keys={"C","a","F","d","G","e","B","g","D","h","Es","c","A",
-            "fis","As","f","E","cis","Des","b","H","gis","Ges","es","Fis","dis",
-            "Ces","as","Cis","ais"};
-        
+        String[] keys = {"C", "a", "F", "d", "G", "e", "B", "g", "D", "h", "Es", "c", "A",
+            "fis", "As", "f", "E", "cis", "Des", "b", "H", "gis", "Ges", "es", "Fis", "dis",
+            "Ces", "as", "Cis", "ais"};
 
         final JComboBox key = new JComboBox(keys);
         key.setSize(140, 30);
         key.setLocation(450, 370);
         key.setVisible(false);
-        final JLabel labkey = lab();
+        final JLabel labkey = createLabel();
         labkey.setVisible(false);
         labkey.setLocation(410, 370);
         labkey.setText("Key");
         panel.add(key);
         panel.add(labkey);
-
-        JButton showAll = new JButton("Advanced");
-        showAll.addActionListener(new ActionListener() {
+        /*
+        JButton showAdvancedBtn = new JButton("Advanced");
+        showAdvancedBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                composer.setVisible(true);
-                labcomposer.setVisible(true);
-                album.setVisible(true);
-                labalbum.setVisible(true);
-                genre.setVisible(true);
-                labgenre.setVisible(true);
-                cover.setVisible(true);
-                labcover.setVisible(true);
-                year.setVisible(true);
-                labyear.setVisible(true);
-                bpm.setVisible(true);
-                labbpm.setVisible(true);
-                latency.setVisible(true);
-                lablatency.setVisible(true);
+                composerInput.setVisible(true);
+                composerLabel.setVisible(true);
+                albumInput.setVisible(true);
+                albumLabel.setVisible(true);
+                genreInput.setVisible(true);
+                genreLabel.setVisible(true);
+                coverPathInput.setVisible(true);
+                coverPathLabel.setVisible(true);
+                yearComboBox.setVisible(true);
+                yearLabel.setVisible(true);
+                bpmInput.setVisible(true);
+                bpmLabel.setVisible(true);
+                latencyInput.setVisible(true);
+                latencyLabel.setVisible(true);
                 key.setVisible(true);
                 labkey.setVisible(true);
             }
         });
-        showAll.setBackground(Color.white);
-        showAll.setSize(100, 30);
-        showAll.setLocation(470, 130);
-        panel.add(showAll);
-
-        JButton add = new JButton("Add");
-        add.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                TrackInfo track = null;
-                if (!artist.getText().isEmpty() && !title.getText().isEmpty()) {
-                    if (!album.getText().isEmpty()) {
-                        if (!genre.getText().isEmpty() && !((String)year.getSelectedItem()).isEmpty()) {
-
-                            if (!cover.getText().isEmpty() && !latency.getText().isEmpty()) {
-
-                                if (!composer.getText().isEmpty() && !bpm.getText().isEmpty() && !((String)key.getSelectedItem()).isEmpty()) {
-                                    track = new TrackInfo(
-                                            new CommonInfo(
-                                                    new Artist(artist.getText()),
-                                                    new Composer(composer.getText()),
-                                                    title.getText(),
-                                                    new AlbumInfo(album.getText(), cover.getText()),
-                                                    genre.getText(),
-                                                    Integer.parseInt((String)year.getSelectedItem())),
-                                            new TechnicalInfo(
-                                                    Integer.parseInt(bpm.getText()),
-                                                    latency.getText(),
-                                                    (String)key.getSelectedItem(), false));
-                                } else {
-                                    track = new TrackInfo(
-                                            new CommonInfo(
-                                                    new Artist(artist.getText()),
-                                                    title.getText(),
-                                                    new AlbumInfo(album.getText(), cover.getText()),
-                                                    genre.getText(),
-                                                    Integer.parseInt((String)year.getSelectedItem())),
-                                            new TechnicalInfo(
-                                                    latency.getText(), false));
-                                }
-                            } else {
-                                track = new TrackInfo(
-                                        new CommonInfo(
-                                                new Artist(artist.getText()),
-                                                title.getText(),
-                                                new AlbumInfo(album.getText()),
-                                                genre.getText(),
-                                                Integer.parseInt((String)year.getSelectedItem())),
-                                        new TechnicalInfo());
-                            }
-                        } else {
-                            track = new TrackInfo(
-                                    new CommonInfo(
-                                            new Artist(artist.getText()),
-                                            title.getText(),
-                                            new AlbumInfo(album.getText())),
-                                    new TechnicalInfo());
-                        }
-                    } else {
-                        track = new TrackInfo(
-                                new CommonInfo(
-                                        new Artist(artist.getText()),
-                                        title.getText()),
-                                new TechnicalInfo());
-                    }
-                }
-                if (track != null) {
-                    mainFrame.updateFullTrackList(track);
-                    mainFrame.showNewTrack(track);
-                }
-                mainFrame.setVisible(false);
-                mainFrame.setResizable(false);
-                dispose();
+        showAdvancedBtn.setBackground(Color.white);
+        showAdvancedBtn.setSize(100, 30);
+        showAdvancedBtn.setLocation(470, 130);
+        panel.add(showAdvancedBtn);
+         */
+        JButton addBtn = new JButton("Add");
+        addBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                addTrackActionPerformed(evt);
             }
         }
         );
 
-        add.setBackground(Color.white);
-
-        add.setSize(100, 30);
-        add.setLocation(312, 520);
-        panel.add(add);
+        addBtn.setBackground(Color.white);
+        addBtn.setSize(100, 30);
+        addBtn.setLocation(312, 520);
+        panel.add(addBtn);
 
         setContentPane(panel);
 
@@ -273,19 +221,92 @@ public class TrackDialog extends javax.swing.JDialog {
 
     }
 
-    JTextField jtext() {
-
+    private JTextField createTextField() {
         JTextField ftf = new JTextField(10);
         ftf.setSize(140, 30);
         return ftf;
-
     }
 
-    JLabel lab() {
+    private JLabel createLabel() {
         JLabel lab = new JLabel("");
         lab.setBackground(Color.white);
         lab.setSize(140, 20);
         return lab;
     }
 
+    private void addTrackActionPerformed(ActionEvent evt) {
+        if (artistInput.getText().isEmpty() || titleInput.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Artist or Title are empty.", "Missing Data - " + APP_TITLE, 2);
+            return;
+        }
+        TrackInfo track = new TrackInfo();
+        AddTrackController controller = new AddTrackController(track, this);
+        controller.addTrack();
+        controller.printModel();
+
+        /*
+                if (!artistInput.getText().isEmpty() && !titleInput.getText().isEmpty()) {
+                    if (!albumInput.getText().isEmpty()) {
+                        if (!genreInput.getText().isEmpty() && !((String) yearComboBox.getSelectedItem()).isEmpty()) {
+
+                            if (!coverPathInput.getText().isEmpty() && !latencyInput.getText().isEmpty()) {
+
+                                if (!composerInput.getText().isEmpty() && !bpmInput.getText().isEmpty() && !((String) key.getSelectedItem()).isEmpty()) {
+                                    track = new TrackInfo(
+                                            new CommonInfo(
+                                                    new Artist(artistInput.getText()),
+                                                    new Composer(composerInput.getText()),
+                                                    titleInput.getText(),
+                                                    new AlbumInfo(albumInput.getText(), coverPathInput.getText()),
+                                                    genreInput.getText(),
+                                                    Integer.parseInt((String) yearComboBox.getSelectedItem())),
+                                            new TechnicalInfo(
+                                                    Integer.parseInt(bpmInput.getText()),
+                                                    latencyInput.getText(),
+                                                    (String) key.getSelectedItem(), false));
+                                } else {
+                                    track = new TrackInfo(
+                                            new CommonInfo(
+                                                    new Artist(artistInput.getText()),
+                                                    titleInput.getText(),
+                                                    new AlbumInfo(albumInput.getText(), coverPathInput.getText()),
+                                                    genreInput.getText(),
+                                                    Integer.parseInt((String) yearComboBox.getSelectedItem())),
+                                            new TechnicalInfo(
+                                                    latencyInput.getText(), false));
+                                }
+                            } else {
+                                track = new TrackInfo(
+                                        new CommonInfo(
+                                                new Artist(artistInput.getText()),
+                                                titleInput.getText(),
+                                                new AlbumInfo(albumInput.getText()),
+                                                genreInput.getText(),
+                                                Integer.parseInt((String) yearComboBox.getSelectedItem())),
+                                        new TechnicalInfo());
+                            }
+                        } else {
+                            track = new TrackInfo(
+                                    new CommonInfo(
+                                            new Artist(artistInput.getText()),
+                                            titleInput.getText(),
+                                            new AlbumInfo(albumInput.getText())),
+                                    new TechnicalInfo());
+                        }
+                    } else {
+                        track = new TrackInfo(
+                                new CommonInfo(
+                                        new Artist(artistInput.getText()),
+                                        titleInput.getText()),
+                                new TechnicalInfo());
+                    }
+                }*/
+        if (track != null) {
+            mainFrame.updateFullTrackList(track);
+            mainFrame.showNewTrack(track);
+        }
+        mainFrame.setVisible(false);
+        mainFrame.setResizable(false);
+        dispose();
+    }
 }
