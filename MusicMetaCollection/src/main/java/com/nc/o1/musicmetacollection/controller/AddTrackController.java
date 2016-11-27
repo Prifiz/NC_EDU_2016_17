@@ -23,8 +23,8 @@ public class AddTrackController {
      * Adds new track.
      */
     public void addTrack() {
-        String artist = view.getArtistInput().getText();
-        String title = view.getTitleInput().getText();
+        String artist = view.getArtistInput();
+        String title = view.getTitleInput();
         CommonInfo commonInfo = new CommonInfo(new Artist(artist), title, false);
         model.setCommonInfo(commonInfo);
     }

@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -35,6 +36,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 
 /**
@@ -143,6 +145,7 @@ public class MainFrame extends JFrame {
         //Отображаем контейнер
         frame.setVisible(true);
         table.setBackground(color);
+        JPanel searchPanel = new JPanel(new FlowLayout());
         JPanel btnPnl = new JPanel(new BorderLayout());
         JPanel bottombtnPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton show = new JButton("Show All");
@@ -169,13 +172,26 @@ public class MainFrame extends JFrame {
                 deleteBtActionPerformed(evt);
             }
         });
+
+        JButton search = new JButton("Search Track");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtActionPerformed(evt);
+            }
+        });
+        JTextField searchText = new JTextField(20);
         show.setBackground(Color.white);
         add.setBackground(Color.white);
         del.setBackground(Color.white);
         bottombtnPnl.add(show);
         bottombtnPnl.add(add);
         bottombtnPnl.add(del);
-
+        searchPanel.add(new JLabel("Поиск: "));
+        searchPanel.add(searchText);
+        searchPanel.add(search);
+        
+        btnPnl.add(searchPanel, BorderLayout.NORTH);
         btnPnl.add(bottombtnPnl, BorderLayout.CENTER);
 
         table.getTableHeader().setReorderingAllowed(false);
@@ -283,8 +299,12 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void editTrackMouseDoubleClick(MouseEvent evt){
-        int selectedRow = table.getSelectedRow();        
+    private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {
+
+    }
+
+    private void editTrackMouseDoubleClick(MouseEvent evt) {
+        int selectedRow = table.getSelectedRow();
         if (selectedRow != -1 && evt.getClickCount() == 2) {
             TrackListTableModel tModel = (TrackListTableModel) table.getModel();
             //TrackDialog editTrack= new TrackDialog(this, rootPaneCheckingEnabled);
