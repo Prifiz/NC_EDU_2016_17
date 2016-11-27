@@ -10,9 +10,10 @@ public class CommonInfo implements Serializable {
     private AlbumInfo albumInfo;
     private String genre;
     private int year;
+    private boolean instrumental;
 
     /**
-     * Создание объекта типа CommonInfo, содержащего общую информацию о треке
+     * Constructs a CommonInfo.
      */
     public CommonInfo() {
         artist = new Artist();
@@ -21,198 +22,233 @@ public class CommonInfo implements Serializable {
         albumInfo = new AlbumInfo();
         genre = "";
         year = 0;
+        instrumental = false;
     }
 
     /**
-     * Создание объекта типа CommonInfo, содержащего общую информацию о треке
+     * Constructs a CommonInfo based on the provided Artist, track title and
+     * type of track.
      *
-     * @param artist - исполнитель
-     * @param title - название трека
+     * @param artist the Artist
+     * @param title the track title
+     * @param instrumental the type of the track
      */
-    public CommonInfo(Artist artist, String title) {
+    public CommonInfo(Artist artist, String title, boolean instrumental) {
         this();
         this.artist = artist;
         this.title = title;
+        this.instrumental = instrumental;
     }
 
     /**
-     * Создание объекта типа CommonInfo, содержащего общую информацию о треке
+     * Constructs a CommonInfo based on the provided Artist, track title,
+     * AlbumInfo and type of track.
      *
-     * @param artist - исполнитель
-     * @param title - название трека
-     * @param albumInfo - альбом
+     * @param artist the Artist
+     * @param title the track title
+     * @param albumInfo the AlbumInfo
+     * @param instrumental the type of the track
      */
-    public CommonInfo(Artist artist, String title, AlbumInfo albumInfo) {
+    public CommonInfo(Artist artist, String title, AlbumInfo albumInfo, boolean instrumental) {
         this();
         this.artist = artist;
         this.title = title;
         this.albumInfo = albumInfo;
+        this.instrumental = instrumental;
     }
 
     /**
-     * Создание объекта типа CommonInfo, содержащего общую информацию о треке
+     * Constructs a CommonInfo based on the provided Artist, track title, year
+     * and type of track.
      *
-     * @param artist - исполнитель
-     * @param title - название трека
-     * @param year - год издания
+     * @param artist the Artist
+     * @param title the track title
+     * @param year the year of the track
+     * @param instrumental the type of the track
      */
-    public CommonInfo(Artist artist, String title, int year) {
+    public CommonInfo(Artist artist, String title, int year, boolean instrumental) {
         this();
         this.artist = artist;
         this.title = title;
         this.year = year;
+        this.instrumental = instrumental;
     }
 
     /**
-     * Создание объекта типа CommonInfo, содержащего общую информацию о треке
+     * Constructs a CommonInfo based on the provided Artist, track title,
+     * AlbumInfo, genre, year and type of track.
      *
-     * @param artist - исполнитель
-     * @param title - название трека
-     * @param albumInfo - альбом
-     * @param genre - жанр
-     * @param year - год издания
+     * @param artist the Artist
+     * @param title the track title
+     * @param albumInfo the AlbumInfo
+     * @param genre the genre of the track
+     * @param year the year of the track
+     * @param instrumental the type of the track
      */
-    public CommonInfo(Artist artist, String title, AlbumInfo albumInfo, String genre, int year) {
+    public CommonInfo(Artist artist, String title, AlbumInfo albumInfo, String genre, int year, boolean instrumental) {
         this();
         this.artist = artist;
         this.title = title;
         this.albumInfo = albumInfo;
         this.genre = genre;
         this.year = year;
+        this.instrumental = instrumental;
     }
 
     /**
-     * Создание объекта типа CommonInfo, содержащего общую информацию о треке
+     * Constructs a CommonInfo based on the provided Artist, Composer, track
+     * title, AlbumInfo, genre, year and type of track.
      *
-     * @param artist - исполнитель
-     * @param composer - композитор
-     * @param title - название альбома
-     * @param albumInfo - альбом
-     * @param genre - жанр
-     * @param year - год издания
+     * @param artist the Artist
+     * @param composer the Composer
+     * @param title the track title
+     * @param albumInfo the AlbumInfo
+     * @param genre the genre of the track
+     * @param year the year of the track
+     * @param instrumental the type of the track
      */
-    public CommonInfo(Artist artist, Composer composer, String title, AlbumInfo albumInfo, String genre, int year) {
+    public CommonInfo(Artist artist, Composer composer, String title, AlbumInfo albumInfo, String genre, int year, boolean instrumental) {
         this.artist = artist;
         this.composer = composer;
         this.title = title;
         this.albumInfo = albumInfo;
         this.genre = genre;
         this.year = year;
+        this.instrumental = instrumental;
     }
 
     /**
-     * Метод получения исполнителя
+     * Returns the Artist.
      *
-     * @return исполнитель
+     * @return an Artist
      */
     public Artist getArtist() {
         return artist;
     }
 
     /**
-     * Метод получения композитора
+     * Returns the Composer.
      *
-     * @return композитор
+     * @return a Composer
      */
     public Composer getComposer() {
         return composer;
     }
 
     /**
-     * Метод получения альбома
+     * Returns the AlbumInfo.
      *
-     * @return альбом
+     * @return an AlbumInfo
      */
     public AlbumInfo getAlbumInfo() {
         return albumInfo;
     }
 
     /**
-     * Метод получения названия трека
+     * Returns the track title.
      *
-     * @return название трека
+     * @return a track title
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * Метод получения жанра
+     * Returns the genre of the track.
      *
-     * @return жанр
+     * @return a genre of the track
      */
     public String getGenre() {
         return genre;
     }
 
     /**
-     * Метод получения года издания
+     * Returns the year of the track.
      *
-     * @return год издания
+     * @return an year of the track
      */
     public int getYear() {
         return year;
     }
 
     /**
-     * Метод изменения исполнителя
+     * Returns the type of the track.
      *
-     * @param artist - исполнитель
+     * @return true if the type of the track is instrumental; false otherwise.
+     */
+    public boolean isInstrumental() {
+        return instrumental;
+    }
+
+    /**
+     * Replaces the Artist with the specified Artist.
+     *
+     * @param artist new Artist
      */
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
 
     /**
-     * Метод изменения композитора
+     * Replaces the Composer with the specified Composer.
      *
-     * @param composer - композитор
+     * @param composer new Composer
      */
     public void setComposer(Composer composer) {
         this.composer = composer;
     }
 
     /**
-     * Метод изменения названия трека
+     * Replaces the track title with the specified track title.
      *
-     * @param title - название трека
+     * @param title new track title
      */
     public void setTitle(String title) {
         this.title = title;
     }
 
     /**
-     * Метод изменения альбома
+     * Replaces the AlbumInfo with the specified AlbumInfo.
      *
-     * @param albumInfo - альбом
+     * @param albumInfo new AlbumInfo
      */
     public void setAlbumInfo(AlbumInfo albumInfo) {
         this.albumInfo = albumInfo;
     }
 
     /**
-     * Метод изменения жанра
+     * Replaces the genre of the track with the specified genre of the track.
      *
-     * @param genre - жанр
+     * @param genre new genre of the track
      */
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
     /**
-     * Метод изменения года издания
+     * Replaces the year of the track with the specified year of the track.
      *
-     * @param year - год издания
+     * @param year new year of the track
      */
     public void setYear(int year) {
         this.year = year;
     }
 
     /**
-     * Метод сравнения объектов
+     * Replaces the type of the track with the specified type of the track.
      *
-     * @param obj - объект, с которым происходит сравнение
-     * @return true, если объекты одинаковы, и false, если объекты разные
+     * @param instrumental new type of the track
+     */
+    public void setInstrumental(boolean instrumental) {
+        this.instrumental = instrumental;
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     *
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false
+     * otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -239,9 +275,9 @@ public class CommonInfo implements Serializable {
     }
 
     /**
-     * Метод получения строкового представления объекта
+     * Returns a string representation of the object.
      *
-     * @return строковое представление объекта
+     * @return a string representation of the object
      */
     @Override
     public String toString() {
@@ -263,9 +299,9 @@ public class CommonInfo implements Serializable {
     }
 
     /**
-     * Метод получения хэш-кода объекта
+     * Returns a hash code value for the object.
      *
-     * @return хэш-код объекта
+     * @return a hash code value for this object
      */
     @Override
     public int hashCode() {
