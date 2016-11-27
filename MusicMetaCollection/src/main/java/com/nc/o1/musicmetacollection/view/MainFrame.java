@@ -5,6 +5,7 @@
  */
 package com.nc.o1.musicmetacollection.view;
 
+import com.nc.o1.musicmetacollection.controller.SearchTrackController;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
 import com.nc.o1.musicmetacollection.model.TrackList;
 import java.awt.BorderLayout;
@@ -60,6 +61,7 @@ public class MainFrame extends JFrame {
     //Массив, содержащий заголовки таблицы
     //  Object[] headers = {"Artist", "Title"};
     JFrame frame;
+    JTextField searchText;
 
     /**
      * Creates Main Window.
@@ -180,17 +182,18 @@ public class MainFrame extends JFrame {
                 searchBtActionPerformed(evt);
             }
         });
-        JTextField searchText = new JTextField(20);
+        searchText = new JTextField(20);
         show.setBackground(Color.white);
         add.setBackground(Color.white);
         del.setBackground(Color.white);
+        search.setBackground(Color.white);
         bottombtnPnl.add(show);
         bottombtnPnl.add(add);
         bottombtnPnl.add(del);
-        searchPanel.add(new JLabel("Поиск: "));
+        searchPanel.add(new JLabel("Search: "));
         searchPanel.add(searchText);
         searchPanel.add(search);
-        
+
         btnPnl.add(searchPanel, BorderLayout.NORTH);
         btnPnl.add(bottombtnPnl, BorderLayout.CENTER);
 
@@ -259,13 +262,7 @@ public class MainFrame extends JFrame {
                 fis = new FileInputStream(chooser.getSelectedFile().getAbsoluteFile());
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 allTracks = (TrackList) ois.readObject();
-                TrackListTableModel model = new TrackListTableModel(allTracks);
-                // и применяем ее к таблице
-                table.setModel(model);
-                //делаем первую строку выделенной
-                if (model.getRowCount() > 0) {
-                    table.setRowSelectionInterval(0, 0);
-                }
+                showTracks(allTracks);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -277,15 +274,19 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
+    private void showTracks(TrackList trackList) {
         //создаем модель на основе полученного треклиста
-        TrackListTableModel model = new TrackListTableModel(allTracks);
+        TrackListTableModel model = new TrackListTableModel(trackList);
         // и применяем ее к таблице
         table.setModel(model);
         //делаем первую строку выделенной
         if (model.getRowCount() > 0) {
             table.setRowSelectionInterval(0, 0);
         }
+    }
+
+    private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
+        showTracks(allTracks);
     }
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,7 +301,14 @@ public class MainFrame extends JFrame {
     }
 
     private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {
-
+        SearchTrackController sCtrl = new SearchTrackController();
+        TrackList schTracks = sCtrl.searchTracks(allTracks, searchText.getText());
+        if (schTracks.getSize() != 0) {
+            showTracks(schTracks);
+        } else {
+            table.repaint();
+            JOptionPane.showMessageDialog(this, "No matches", "Missing Data - MusicMetaCollection", 2);
+        }
     }
 
     private void editTrackMouseDoubleClick(MouseEvent evt) {
@@ -319,15 +327,11 @@ public class MainFrame extends JFrame {
     }
 
     public void showNewTrack(TrackInfo track) {
-        //newTracks.addTrackInfo(track);
-        TrackListTableModel model = new TrackListTableModel(allTracks);
-        table.setModel(model);
-        if (model.getRowCount() > 0) {
-            table.setRowSelectionInterval(0, 0);
-        }
+        newTracks.addTrackInfo(track);
+        showTracks(newTracks);
     }
 
-    public void updateFullTrackList(TrackInfo track) {
+    public void updateTrackList(TrackInfo track) {
         if (track != null) {
             allTracks.addTrackInfo(track);
             track = null;

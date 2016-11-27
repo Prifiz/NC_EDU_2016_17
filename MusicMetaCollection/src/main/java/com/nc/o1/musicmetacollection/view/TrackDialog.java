@@ -298,9 +298,9 @@ public class TrackDialog extends javax.swing.JDialog {
         }
         System.out.println("year comboBox: '" + yearComboBox.getSelectedItem() + "'");
         TrackInfo track = new TrackInfo();
-//        AddTrackController controller = new AddTrackController(track, this);
-//        controller.addTrack();
-//        controller.printModel();
+        AddTrackController controller = new AddTrackController(track, this);
+        controller.addTrack();
+        controller.printModel();
 
         /*
                 if (!artistInput.getText().isEmpty() && !titleInput.getText().isEmpty()) {
@@ -360,7 +360,7 @@ public class TrackDialog extends javax.swing.JDialog {
                     }
                 }*/
         if (track != null) {
-            mainFrame.updateFullTrackList(track);
+            mainFrame.updateTrackList(track);
             mainFrame.showNewTrack(track);
         }
         mainFrame.setVisible(false);
