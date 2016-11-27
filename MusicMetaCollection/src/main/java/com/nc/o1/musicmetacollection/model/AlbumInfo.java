@@ -8,7 +8,7 @@ public class AlbumInfo implements Serializable {
     private String cover;
 
     /**
-     * Constructs an empty AlbumInfo.
+     * Создание нового альбома
      */
     public AlbumInfo() {
         album = "";
@@ -16,9 +16,9 @@ public class AlbumInfo implements Serializable {
     }
 
     /**
-     * Constructs an AlbumInfo based on the album name.
-     *
-     * @param album album name
+     * Создание нового альбома
+     * 
+     * @param album - название альбома
      */
     public AlbumInfo(String album) {
         this();
@@ -26,11 +26,10 @@ public class AlbumInfo implements Serializable {
     }
 
     /**
-     * Constructs an AlbumInfo based on the album name and the path to the
-     * cover.
-     *
-     * @param album album name
-     * @param cover path to the cover
+     * Создание нового альбома
+     * 
+     * @param album - название альбома
+     * @param cover - адрес обложки альбома
      */
     public AlbumInfo(String album, String cover) {
         this.album = album;
@@ -38,48 +37,46 @@ public class AlbumInfo implements Serializable {
     }
 
     /**
-     * Returns the album name.
-     *
-     * @return the album name
+     * Метод получения названия альбома
+     * 
+     * @return название альбома
      */
     public String getAlbum() {
         return album;
     }
 
     /**
-     * Returns the path to the cover.
-     *
-     * @return the path to the cover
+     * Метод получения адреса обложки альбома
+     * 
+     * @return адрес обложки альбома
      */
     public String getCover() {
         return cover;
     }
 
     /**
-     * Replaces the album name in this AlbumInfo with the specified album name.
-     *
-     * @param album new album name
+     * Метод изменения названия альбома
+     * 
+     * @param album - название альбома
      */
     public void setAlbum(String album) {
         this.album = album;
     }
 
     /**
-     * Replaces the path to the cover in this AlbumInfo with the specified path
-     * to the cover.
-     *
-     * @param cover new path to the cover
+     * Метод изменения адреса обложки альбома
+     * 
+     * @param cover - адрес обложки альбома
      */
     public void setCover(String cover) {
         this.cover = cover;
     }
 
     /**
-     * Indicates whether some other object is "equal to" this one.
-     *
-     * @param obj the reference object with which to compare
-     * @return true if this object is the same as the obj argument; false
-     * otherwise
+     * Метод сравнения объектов
+     * 
+     * @param obj - объект, с которым происходит сравнение
+     * @return true, если объекты одинаковы, и false, если объекты разные
      */
     @Override
     public boolean equals(Object obj) {
@@ -103,9 +100,9 @@ public class AlbumInfo implements Serializable {
     }
 
     /**
-     * Returns a string representation of the object.
-     *
-     * @return a string representation of the object
+     * Метод получения строкового представления объекта
+     * 
+     * @return строковое представление объекта
      */
     @Override
     public String toString() {
@@ -118,9 +115,9 @@ public class AlbumInfo implements Serializable {
     }
 
     /**
-     * Returns a hash code value for the object.
-     *
-     * @return a hash code value for this object
+     * Метод получения хэш-кода объекта
+     * 
+     * @return хэш-код объекта
      */
     @Override
     public int hashCode() {
