@@ -9,54 +9,56 @@ public class TrackList implements Serializable {
     private List<TrackInfo> tracks;
 
     /**
-     * Создание нового треклиста
+     * Constructs an empty TrackList.
      */
     public TrackList() {
         tracks = new ArrayList<TrackInfo>();
     }
 
     /**
-     * Метод добавления трека в треклист
+     * Appends the specified TrackInfo to the end of this TrackList.
      *
-     * @param trackInfo - трек
+     * @param trackInfo TrackInfo to be appended to this TrackList
      */
     public void addTrackInfo(TrackInfo trackInfo) {
         tracks.add(trackInfo);
     }
 
     /**
-     * Метод получения трека по номеру в треклисте
+     * Returns the TrackInfo at the specified position in this TrackList.
      *
-     * @param index - номер трека в треклисте
-     * @return трек по номеру в треклисте
+     * @param index index of the TrackInfo to return
+     * @return the TrackInfo at the specified position in this TrackList
      */
     public TrackInfo getTrackInfo(int index) {
         return tracks.get(index);
     }
 
     /**
-     * Метод изменения трека по номеру в треклисте и ссылке на новый трек
+     * Replaces the TrackInfo at the specified position in this TrackList with
+     * the specified TrackInfo.
      *
-     * @param index - номер трека в треклисте
-     * @param trackInfo - трек
+     * @param index index of the TrackInfo to replace
+     * @param trackInfo TrackInfo to be stored at the specified position
      */
     public void setTrackInfo(int index, TrackInfo trackInfo) {
         tracks.set(index, trackInfo);
     }
 
     /**
-     * Метод удаления трека из треклиста по номеру
+     * Removes the TrackInfo at the specified position in this TrackList. Shifts
+     * any subsequent TracksInfo to the left (subtracts one from their indices).
      *
-     * @param index - номер трека в треклисте
+     * @param index index of the TrackInfo to be removed
      */
     public void removeTrackInfo(int index) {
         tracks.remove(index);
     }
 
     /**
-     * Метод получения размера треклиста
+     * Returns the number of TracksInfo in this TrackList.
      *
-     * @return размер треклиста
+     * @return the number of TracksInfo in this TrackList
      */
     public int getSize() {
         return tracks.size();

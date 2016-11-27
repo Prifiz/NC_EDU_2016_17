@@ -10,26 +10,25 @@ import java.io.IOException;
  * @author Undefined
  */
 public class Controller {
-    
+
     public static StringBuffer readHelp() throws IOException {
         BufferedReader reader;
-        String [] readyHelp;
-        reader=new BufferedReader(new FileReader("src/help.txt"));
-        
-        StringBuffer filetext=new StringBuffer();
-        while(reader.ready()){
+        String[] readyHelp;
+        reader = new BufferedReader(new FileReader("src/help.txt"));
+
+        StringBuffer filetext = new StringBuffer();
+        while (reader.ready()) {
             filetext.append(reader.readLine());
             filetext.append("\n");
         }
-        
+
 //        String str=String.valueOf(filetext);
 //        readyHelp=str.split("\n");
-        
         reader.close();
-        return filetext;  
+        return filetext;
     }
-    
-    public static void parseXML(String path, MainFrame frame){
-        
+
+    public static void parseXML(String path, MainFrame frame) {
+
     }
 }

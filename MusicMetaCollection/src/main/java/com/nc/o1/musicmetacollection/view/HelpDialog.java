@@ -35,6 +35,7 @@ public class HelpDialog extends javax.swing.JDialog{
             textlab.setBackground(Color.white);
             textlab.setSize(700, 600);
             textlab.setLocation(0,0);
+            textlab.setEditable(false);
             panel.add(textlab);
         } catch (IOException ex) {
             Logger.getLogger(HelpDialog.class.getName()).log(Level.SEVERE, null, ex);

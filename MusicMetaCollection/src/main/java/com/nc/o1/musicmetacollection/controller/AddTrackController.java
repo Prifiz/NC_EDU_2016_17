@@ -6,7 +6,7 @@ import com.nc.o1.musicmetacollection.model.TrackInfo;
 import com.nc.o1.musicmetacollection.view.TrackDialog;
 
 /**
- * 
+ *
  * @author SteVL
  */
 public class AddTrackController {
@@ -16,22 +16,21 @@ public class AddTrackController {
 
     public AddTrackController(TrackInfo model, TrackDialog view) {
         this.model = model;
-        this.view = view;        
+        this.view = view;
     }
-    
+
     /**
      * Adds new track.
      */
-    public void addTrack(){
-        String artist= view.getArtistInput().getText();
-        String title= view.getTitleInput().getText();
-        CommonInfo commonInfo=new CommonInfo(new Artist(artist), title);
-        model.setCommonInfo(commonInfo);  
+    public void addTrack() {
+        String artist = view.getArtistInput().getText();
+        String title = view.getTitleInput().getText();
+        CommonInfo commonInfo = new CommonInfo(new Artist(artist), title);
+        model.setCommonInfo(commonInfo);
     }
-    
-    
+
     //Service temp method
-    public void printModel(){
+    public void printModel() {
         System.out.println(model.getCommonInfo());
     }
 
