@@ -8,7 +8,7 @@ public class AlbumInfo implements Serializable {
     private String cover;
 
     /**
-     * Constructs an empty AlbumInfo.
+     * Constructs an AlbumInfo.
      */
     public AlbumInfo() {
         album = "";

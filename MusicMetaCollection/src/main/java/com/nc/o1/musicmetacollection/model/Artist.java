@@ -7,7 +7,7 @@ public class Artist implements Serializable {
     private String name;
 
     /**
-     * Constructs an empty Artist.
+     * Constructs an Artist.
      */
     public Artist() {
         name = "";
