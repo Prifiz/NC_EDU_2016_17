@@ -8,7 +8,7 @@ public class TrackInfo implements Serializable {
     private TechnicalInfo technicalInfo;
 
     /**
-     * Создание объекта типа TrackInfo, содержащего полную информацию о треке
+     * Constructs a TrackInfo.
      */
     public TrackInfo() {
         commonInfo = new CommonInfo();
@@ -16,19 +16,20 @@ public class TrackInfo implements Serializable {
     }
 
     /**
-     * Создание объекта типа TrackInfo, содержащего полную информацию о треке
+     * Constructs a TrackInfo based on the provided CommonInfo.
      *
-     * @param commonInfo - общая информация о треке
+     * @param commonInfo the CommonInfo
      */
     public TrackInfo(CommonInfo commonInfo) {
         this.commonInfo = commonInfo;
     }
 
     /**
-     * Создание объекта типа TrackInfo, содержащего полную информацию о треке
+     * Constructs a TrackInfo based on the provided CommonInfo and
+     * TechnicalInfo.
      *
-     * @param commonInfo - общая информация о треке
-     * @param technicalInfo - техническая информация о треке
+     * @param commonInfo the CommonInfo
+     * @param technicalInfo the TechnicalInfo
      */
     public TrackInfo(CommonInfo commonInfo, TechnicalInfo technicalInfo) {
         this.commonInfo = commonInfo;
@@ -36,46 +37,47 @@ public class TrackInfo implements Serializable {
     }
 
     /**
-     * Метод получения общей информации о треке
+     * Returns the CommonInfo.
      *
-     * @return общая информация о треке
+     * @return a CommonInfo
      */
     public CommonInfo getCommonInfo() {
         return commonInfo;
     }
 
     /**
-     * Метод получения технической информации о треке
+     * Returns the TechnicalInfo.
      *
-     * @return техническая информация о треке
+     * @return a TechnicalInfo
      */
     public TechnicalInfo getTechnicalInfo() {
         return technicalInfo;
     }
 
     /**
-     * Метод изменения общей информации о треке
+     * Replaces the CommonInfo with the specified CommonInfo.
      *
-     * @param commonInfo - общая информация о треке
+     * @param commonInfo new CommonInfo
      */
     public void setCommonInfo(CommonInfo commonInfo) {
         this.commonInfo = commonInfo;
     }
 
     /**
-     * Метод изменения технической информации о треке
+     * Replaces the TechnicalInfo with the specified TechnicalInfo.
      *
-     * @param technicalInfo - техническая информация о треке
+     * @param technicalInfo new TechnicalInfo
      */
     public void setTechnicalInfo(TechnicalInfo technicalInfo) {
         this.technicalInfo = technicalInfo;
     }
 
     /**
-     * Метод сравнения объектов
+     * Indicates whether some other object is "equal to" this one.
      *
-     * @param obj - объект, с которым происходит сравнение
-     * @return true, если объекты одинаковы, и false, если объекты разные
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false
+     * otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -99,9 +101,9 @@ public class TrackInfo implements Serializable {
     }
 
     /**
-     * Метод получения строкового представления объекта
+     * Returns a string representation of the object.
      *
-     * @return строковое представление объекта
+     * @return a string representation of the object
      */
     @Override
     public String toString() {
@@ -112,9 +114,9 @@ public class TrackInfo implements Serializable {
     }
 
     /**
-     * Метод получения хэш-кода объекта
+     * Returns a hash code value for the object.
      *
-     * @return хэш-код объекта
+     * @return a hash code value for this object
      */
     @Override
     public int hashCode() {
