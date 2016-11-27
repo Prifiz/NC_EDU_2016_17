@@ -31,18 +31,18 @@ public class TrackDialog extends javax.swing.JDialog {
 
     private static final String APP_TITLE = "MusicMetaCollection";
 
-    private javax.swing.JTextField artistInput;//
-    private javax.swing.JTextField titleInput;//
-    private javax.swing.JTextField genreInput;//
-    private javax.swing.JTextField composerInput;//
-    private javax.swing.JTextField albumInput;//
+    private javax.swing.JTextField artistInput;
+    private javax.swing.JTextField titleInput;
+    private javax.swing.JTextField genreInput;
+    private javax.swing.JTextField composerInput;
+    private javax.swing.JTextField albumInput;
     private javax.swing.JTextField coverPathInput;
     //Specific Controls
-    private javax.swing.JComboBox yearComboBox;//
-    private javax.swing.JFormattedTextField bpmInput;//
-    private javax.swing.JFormattedTextField latencyInputHour;//
-    private javax.swing.JFormattedTextField latencyInputMin;//
-    private javax.swing.JFormattedTextField latencyInputSec;//
+    private javax.swing.JComboBox yearComboBox;
+    private javax.swing.JFormattedTextField bpmInput;
+    private javax.swing.JFormattedTextField latencyInputHour;
+    private javax.swing.JFormattedTextField latencyInputMin;
+    private javax.swing.JFormattedTextField latencyInputSec;
     private javax.swing.JComboBox keyComboBox;
 
     public String getArtistInput() {
@@ -192,15 +192,15 @@ public class TrackDialog extends javax.swing.JDialog {
         latencyInputHour = new JFormattedTextField(new MaskFormatter("##"));
         latencyInputMin = new JFormattedTextField(new MaskFormatter("##"));
         latencyInputSec = new JFormattedTextField(new MaskFormatter("##"));
-        latencyInputHour.setValue("0");
+        latencyInputHour.setValue("00");
         latencyInputHour.setSize(30, 30);
         latencyInputHour.setLocation(100, 370);
         latencyInputHour.setVisible(false);
-        latencyInputMin.setValue("0");
+        latencyInputMin.setValue("00");
         latencyInputMin.setSize(30, 30);
         latencyInputMin.setLocation(150, 370);
         latencyInputMin.setVisible(false);
-        latencyInputSec.setValue("0");
+        latencyInputSec.setValue("00");
         latencyInputSec.setSize(30, 30);
         latencyInputSec.setLocation(200, 370);
         latencyInputSec.setVisible(false);
@@ -218,15 +218,15 @@ public class TrackDialog extends javax.swing.JDialog {
             "fis", "As", "f", "E", "cis", "Des", "b", "H", "gis", "Ges", "es", "Fis", "dis",
             "Ces", "as", "Cis", "ais"};
 
-        final JComboBox key = new JComboBox(keys);
-        key.setSize(140, 30);
-        key.setLocation(450, 370);
-        key.setVisible(false);
+        keyComboBox = new JComboBox(keys);
+        keyComboBox.setSize(140, 30);
+        keyComboBox.setLocation(450, 370);
+        keyComboBox.setVisible(false);
         final JLabel keyLabel = createLabel();
         keyLabel.setVisible(false);
         keyLabel.setLocation(410, 370);
         keyLabel.setText("Key");
-        panel.add(key);
+        panel.add(keyComboBox);
         panel.add(keyLabel);
 
         JButton showAdvancedBtn = new JButton("Advanced");
@@ -249,7 +249,7 @@ public class TrackDialog extends javax.swing.JDialog {
                 latencyInputMin.setVisible(true);
                 latencyInputSec.setVisible(true);
                 latencyLabel.setVisible(true);
-                key.setVisible(true);
+                keyComboBox.setVisible(true);
                 keyLabel.setVisible(true);
             }
         });
@@ -296,73 +296,13 @@ public class TrackDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Artist or Title are empty.", "Missing Data - " + APP_TITLE, 2);
             return;
         }
-        System.out.println("year comboBox: '" + yearComboBox.getSelectedItem() + "'");
         TrackInfo track = new TrackInfo();
         AddTrackController controller = new AddTrackController(track, this);
         controller.addTrack();
-        controller.printModel();
-
-        /*
-                if (!artistInput.getText().isEmpty() && !titleInput.getText().isEmpty()) {
-                    if (!albumInput.getText().isEmpty()) {
-                        if (!genreInput.getText().isEmpty() && !((String) yearComboBox.getSelectedItem()).isEmpty()) {
-
-                            if (!coverPathInput.getText().isEmpty() && !latencyInput.getText().isEmpty()) {
-
-                                if (!composerInput.getText().isEmpty() && !bpmInput.getText().isEmpty() && !((String) key.getSelectedItem()).isEmpty()) {
-                                    track = new TrackInfo(
-                                            new CommonInfo(
-                                                    new Artist(artistInput.getText()),
-                                                    new Composer(composerInput.getText()),
-                                                    titleInput.getText(),
-                                                    new AlbumInfo(albumInput.getText(), coverPathInput.getText()),
-                                                    genreInput.getText(),
-                                                    Integer.parseInt((String) yearComboBox.getSelectedItem())),
-                                            new TechnicalInfo(
-                                                    Integer.parseInt(bpmInput.getText()),
-                                                    latencyInput.getText(),
-                                                    (String) key.getSelectedItem(), false));
-                                } else {
-                                    track = new TrackInfo(
-                                            new CommonInfo(
-                                                    new Artist(artistInput.getText()),
-                                                    titleInput.getText(),
-                                                    new AlbumInfo(albumInput.getText(), coverPathInput.getText()),
-                                                    genreInput.getText(),
-                                                    Integer.parseInt((String) yearComboBox.getSelectedItem())),
-                                            new TechnicalInfo(
-                                                    latencyInput.getText(), false));
-                                }
-                            } else {
-                                track = new TrackInfo(
-                                        new CommonInfo(
-                                                new Artist(artistInput.getText()),
-                                                titleInput.getText(),
-                                                new AlbumInfo(albumInput.getText()),
-                                                genreInput.getText(),
-                                                Integer.parseInt((String) yearComboBox.getSelectedItem())),
-                                        new TechnicalInfo());
-                            }
-                        } else {
-                            track = new TrackInfo(
-                                    new CommonInfo(
-                                            new Artist(artistInput.getText()),
-                                            titleInput.getText(),
-                                            new AlbumInfo(albumInput.getText())),
-                                    new TechnicalInfo());
-                        }
-                    } else {
-                        track = new TrackInfo(
-                                new CommonInfo(
-                                        new Artist(artistInput.getText()),
-                                        titleInput.getText()),
-                                new TechnicalInfo());
-                    }
-                }*/
-        if (track != null) {
+       
             mainFrame.updateTrackList(track);
             mainFrame.showNewTrack(track);
-        }
+        
         mainFrame.setVisible(false);
         mainFrame.setResizable(false);
         dispose();
