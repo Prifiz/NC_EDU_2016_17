@@ -31,25 +31,66 @@ public class TrackDialog extends javax.swing.JDialog {
 
     private static final String APP_TITLE = "MusicMetaCollection";
 
-    private javax.swing.JTextField artistInput;
-    private javax.swing.JTextField titleInput;
-    private javax.swing.JTextField genreInput;
-    private javax.swing.JTextField composerInput;
-    private javax.swing.JTextField albumInput;
+    private javax.swing.JTextField artistInput;//
+    private javax.swing.JTextField titleInput;//
+    private javax.swing.JTextField genreInput;//
+    private javax.swing.JTextField composerInput;//
+    private javax.swing.JTextField albumInput;//
     private javax.swing.JTextField coverPathInput;
     //Specific Controls
-    private javax.swing.JFormattedTextField bpmInput;
-    private javax.swing.JFormattedTextField latencyInputHour;
-    private javax.swing.JFormattedTextField latencyInputMin;
-    private javax.swing.JFormattedTextField latencyInputSec;
-    private String year;
+    private javax.swing.JComboBox yearComboBox;//
+    private javax.swing.JFormattedTextField bpmInput;//
+    private javax.swing.JFormattedTextField latencyInputHour;//
+    private javax.swing.JFormattedTextField latencyInputMin;//
+    private javax.swing.JFormattedTextField latencyInputSec;//
+    private javax.swing.JComboBox keyComboBox;
 
-    public JTextField getArtistInput() {
-        return artistInput;
+    public String getArtistInput() {
+        return artistInput.getText();
     }
 
-    public JTextField getTitleInput() {
-        return titleInput;
+    public String getTitleInput() {
+        return titleInput.getText();
+    }
+
+    public String getGenreInput() {
+        return genreInput.getText();
+    }
+
+    public String getYearSelected() {
+        return (String) yearComboBox.getSelectedItem();
+    }
+
+    public String getComposerInput() {
+        return composerInput.getText();
+    }
+
+    public String getAlbumInput() {
+        return albumInput.getText();
+    }
+
+    public String getBpm() {
+        return bpmInput.getText();
+    }
+
+    public String getLatencyInputHour() {
+        return latencyInputHour.getText();
+    }
+
+    public String getLatencyInputMin() {
+        return latencyInputMin.getText();
+    }
+
+    public String getLatencyInputSec() {
+        return latencyInputSec.getText();
+    }
+
+    public String getCoverPath() {
+        return coverPathInput.getText();
+    }
+
+    public String getKeySelected() {
+        return (String) keyComboBox.getSelectedItem();
     }
 
     public TrackDialog(java.awt.Frame parent, boolean modal) throws ParseException {
@@ -120,12 +161,13 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(coverPathLabel);
 
         Calendar calend = Calendar.getInstance();
-        String[] years = new String[calend.get(Calendar.YEAR) - 1899];
-        for (int i = 0; i < years.length; i++) {
-            years[i] = "" + (1900 + i);
+        String[] years = new String[calend.get(Calendar.YEAR) - 1899 + 1];
+        years[0] = "";
+        for (int i = 1; i < years.length; i++) {
+            years[i] = "" + (1899 + i);
         }
-        //need to do something with year.How does it save?
-        final JComboBox yearComboBox = new JComboBox(years);
+
+        yearComboBox = new JComboBox(years);
         yearComboBox.setSize(70, 30);
         yearComboBox.setLocation(100, 310);
         yearComboBox.setVisible(false);
@@ -171,7 +213,8 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(latencyInputSec);
         panel.add(latencyLabel);
 
-        String[] keys = {"C", "a", "F", "d", "G", "e", "B", "g", "D", "h", "Es", "c", "A",
+        //Should make latin like (C, Cm, C#, C#m)
+        String[] keys = {"", "C", "a", "F", "d", "G", "e", "B", "g", "D", "h", "Es", "c", "A",
             "fis", "As", "f", "E", "cis", "Des", "b", "H", "gis", "Ges", "es", "Fis", "dis",
             "Ces", "as", "Cis", "ais"};
 
@@ -179,13 +222,13 @@ public class TrackDialog extends javax.swing.JDialog {
         key.setSize(140, 30);
         key.setLocation(450, 370);
         key.setVisible(false);
-        final JLabel labkey = createLabel();
-        labkey.setVisible(false);
-        labkey.setLocation(410, 370);
-        labkey.setText("Key");
+        final JLabel keyLabel = createLabel();
+        keyLabel.setVisible(false);
+        keyLabel.setLocation(410, 370);
+        keyLabel.setText("Key");
         panel.add(key);
-        panel.add(labkey);
-        /*
+        panel.add(keyLabel);
+
         JButton showAdvancedBtn = new JButton("Advanced");
         showAdvancedBtn.addActionListener(new ActionListener() {
             @Override
@@ -202,17 +245,19 @@ public class TrackDialog extends javax.swing.JDialog {
                 yearLabel.setVisible(true);
                 bpmInput.setVisible(true);
                 bpmLabel.setVisible(true);
-                latencyInput.setVisible(true);
+                latencyInputHour.setVisible(true);
+                latencyInputMin.setVisible(true);
+                latencyInputSec.setVisible(true);
                 latencyLabel.setVisible(true);
                 key.setVisible(true);
-                labkey.setVisible(true);
+                keyLabel.setVisible(true);
             }
         });
         showAdvancedBtn.setBackground(Color.white);
         showAdvancedBtn.setSize(100, 30);
         showAdvancedBtn.setLocation(470, 130);
         panel.add(showAdvancedBtn);
-         */
+
         JButton addBtn = new JButton("Add");
         addBtn.addActionListener(new ActionListener() {
             @Override
@@ -251,10 +296,11 @@ public class TrackDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Artist or Title are empty.", "Missing Data - " + APP_TITLE, 2);
             return;
         }
+        System.out.println("year comboBox: '" + yearComboBox.getSelectedItem() + "'");
         TrackInfo track = new TrackInfo();
-        AddTrackController controller = new AddTrackController(track, this);
-        controller.addTrack();
-        controller.printModel();
+//        AddTrackController controller = new AddTrackController(track, this);
+//        controller.addTrack();
+//        controller.printModel();
 
         /*
                 if (!artistInput.getText().isEmpty() && !titleInput.getText().isEmpty()) {
