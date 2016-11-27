@@ -25,6 +25,7 @@ public class SearchTrackController {
             for (int j = 0; j < currentTrack.toString().length() - searchValue.length() + 1; j++) {
                 if (currentTrack.toString().substring(j, searchValue.length() + j).equals(searchValue)) {
                     searchList.addTrackInfo(currentTrack);
+                    break;
                 }
             }
         }

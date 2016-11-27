@@ -182,11 +182,21 @@ public class MainFrame extends JFrame {
                 searchBtActionPerformed(evt);
             }
         });
+
+        JButton clear = new JButton("Clear Table");
+        clear.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtActionPerformed(evt);
+            }
+        });
         searchText = new JTextField(20);
         show.setBackground(Color.white);
         add.setBackground(Color.white);
         del.setBackground(Color.white);
         search.setBackground(Color.white);
+        clear.setBackground(Color.white);
+        bottombtnPnl.add(clear);
         bottombtnPnl.add(show);
         bottombtnPnl.add(add);
         bottombtnPnl.add(del);
@@ -285,10 +295,17 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void clearTable() {
+        showTracks(new TrackList());
+    }
+
     private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
         showTracks(allTracks);
     }
 
+    private void clearBtActionPerformed(java.awt.event.ActionEvent evt){
+        clearTable();
+    }
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
@@ -306,7 +323,7 @@ public class MainFrame extends JFrame {
         if (schTracks.getSize() != 0) {
             showTracks(schTracks);
         } else {
-            table.repaint();
+            clearTable();
             JOptionPane.showMessageDialog(this, "No matches", "Missing Data - MusicMetaCollection", 2);
         }
     }
