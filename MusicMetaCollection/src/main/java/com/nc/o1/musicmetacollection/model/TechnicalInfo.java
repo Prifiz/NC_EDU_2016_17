@@ -7,99 +7,94 @@ public class TechnicalInfo implements Serializable {
     private int beatsPerMinute;
     private int latency;
     private String key;
-    private boolean musicOnly;
     private String comment;
 
     /**
-     * Создание объекта типа TechnicalInfo, содержащего техническую информацию о
-     * треке
+     * Constructs a TechnicalInfo.
      */
     public TechnicalInfo() {
         beatsPerMinute = 0;
         latency = 0;
         key = "";
-        musicOnly = false;
         comment = "";
     }
 
     /**
-     * Создание объекта типа TechnicalInfo, содержащего техническую информацию о
-     * треке
+     * Constructs a TechnicalInfo based on the string representation of the
+     * latency of the track.
      *
-     * @param stringLatency - строковое представление длительности трека в
-     * формате "mm:ss"
-     * @param musicOnly - true, если трек не содержит слов, и false, если трек
-     * со словами
+     * @param stringLatency the string representation of the latency of the
+     * track
      */
-    public TechnicalInfo(String stringLatency, boolean musicOnly) {
+    public TechnicalInfo(String stringLatency) {
         this();
         this.latency = stringToLatency(stringLatency);
-        this.musicOnly = musicOnly;
     }
 
     /**
-     * Создание объекта типа TechnicalInfo, содержащего техническую информацию о
-     * треке
+     * Constructs a TechnicalInfo based on the BPM, string representation of the
+     * latency of the track and key.
      *
-     * @param beatsPerMinute - количество ударов в минуту
-     * @param stringLatency - строковое представление длительности трека в
-     * формате "mm:ss"
-     * @param key - тональность
-     * @param musicOnly - true, если трек не содержит слов, и false, если трек
-     * со словами
+     * @param beatsPerMinute the BPM
+     * @param stringLatency the string representation of the latency of the
+     * track
+     * @param key the key
      */
-    public TechnicalInfo(int beatsPerMinute, String stringLatency, String key, boolean musicOnly) {
+    public TechnicalInfo(int beatsPerMinute, String stringLatency, String key) {
         this();
         this.beatsPerMinute = beatsPerMinute;
         this.latency = stringToLatency(stringLatency);
         this.key = key;
-        this.musicOnly = musicOnly;
     }
 
     /**
-     * Создание объекта типа TechnicalInfo, содержащего техническую информацию о
-     * треке
+     * Constructs a TechnicalInfo based on the BPM, string representation of the
+     * latency of the track, key and comment.
      *
-     * @param beatsPerMinute - количество ударов в минуту
-     * @param stringLatency - строковое представление длительности трека в
-     * формате "mm:ss"
-     * @param key - тональность
-     * @param musicOnly - true, если трек не содержит слов, и false, если трек
-     * со словами
-     * @param comment -комментарий
+     * @param beatsPerMinute the BPM
+     * @param stringLatency the string representation of the latency of the
+     * track
+     * @param key the key
+     * @param comment the comment
      */
-    public TechnicalInfo(int beatsPerMinute, String stringLatency, String key, boolean musicOnly, String comment) {
-        this(beatsPerMinute, stringLatency, key, musicOnly);
+    public TechnicalInfo(int beatsPerMinute, String stringLatency, String key, String comment) {
+        this(beatsPerMinute, stringLatency, key);
         this.comment = comment;
     }
 
     private int stringToLatency(String stringLatency) {
         String[] masLatency = stringLatency.split(":");
-        int minutes = Integer.parseInt(masLatency[0]);
-        int seconds = Integer.parseInt(masLatency[1]);
-        return minutes * 60 + seconds;
+        int hours = Integer.parseInt(masLatency[0]);
+        int minutes = Integer.parseInt(masLatency[1]);
+        int seconds = Integer.parseInt(masLatency[2]);
+        return hours * 3600 + minutes * 60 + seconds;
     }
 
     /**
-     * Метод получения количества ударов в минуту
+     * Returns the BPM.
      *
-     * @return количество ударов в минуту
+     * @return a BPM
      */
     public int getBeatsPerMinute() {
         return beatsPerMinute;
     }
 
     /**
-     * Метод получения строкового представления длительности трека в формате
-     * "mm:ss"
+     * Returns the string representation of the latency of the track.
      *
-     * @return строковое представление длительности трека в формате "mm:ss"
+     * @return a string representation of the latency of the track
      */
     public String getStringLatency() {
         int sec = latency;
         int min = 0;
-        StringBuilder seconds = new StringBuilder("");
-        StringBuilder minutes = new StringBuilder("");
+        int hour = 0;
+        StringBuilder hours = new StringBuilder();
+        StringBuilder seconds = new StringBuilder();
+        StringBuilder minutes = new StringBuilder();
+        while (sec > 3600) {
+            sec -= 3600;
+            hour++;
+        }
         while (sec > 60) {
             sec -= 60;
             min++;
@@ -112,109 +107,96 @@ public class TechnicalInfo implements Serializable {
             minutes.append("0");
         }
         minutes.append(min);
-        minutes.append(":");
-        minutes.append(seconds);
-        return String.valueOf(minutes);
+        if (hour < 10) {
+            hours.append("0");
+        }
+        hours.append(hour);
+        hours.append(":");
+        hours.append(minutes);
+        hours.append(":");
+        hours.append(seconds);
+        return String.valueOf(hours);
     }
 
     /**
-     * Метод получения длительности трека в секундах
+     * Returns the latency of the track.
      *
-     * @return длительность трека в секундах
+     * @return a latency of the track
      */
     public int getLatency() {
         return latency;
     }
 
     /**
-     * Метод получения тональности
+     * Returns the key of the track.
      *
-     * @return тональность
+     * @return a key of the track
      */
     public String getKey() {
         return key;
     }
 
     /**
-     * Метод проверки наличия слов в треке
+     * Returns the comment.
      *
-     * @return true, если трек не содержит слов, и false, если трек со словами
-     */
-    public boolean isMusicOnly() {
-        return musicOnly;
-    }
-
-    /**
-     * Метод получения комментария
-     *
-     * @return комментарий
+     * @return a comment
      */
     public String getComment() {
         return comment;
     }
 
     /**
-     * Метод изменения количества ударов в минуту
+     * Replaces the BPM with the specified BPM.
      *
-     * @param beatsPerMinute - количество ударов в минуту
+     * @param beatsPerMinute new BPM
      */
     public void setBeatsPerMinute(int beatsPerMinute) {
         this.beatsPerMinute = beatsPerMinute;
     }
 
     /**
-     * Метод изменения строкового представления длительности трека в формате
-     * "mm:ss"
+     * Replaces the latency of the track with the specified string
+     * representation of the latency of the track.
      *
-     * @param stringLatency - строковое представление длительности трека в
-     * формате "mm:ss"
+     * @param stringLatency a string representation of new latency of the track
      */
     public void setLatency(String stringLatency) {
         latency = stringToLatency(stringLatency);
     }
 
     /**
-     * Метод изменения длительности трека в секундах
+     * Replaces the latency with the specified latency.
      *
-     * @param latency - длительность трека в секундах
+     * @param latency new latency of the track
      */
     public void setLatency(int latency) {
         this.latency = latency;
     }
 
     /**
-     * Метод изменения тональности
+     * Replaces the key with the specified key.
      *
-     * @param key - тональность
+     * @param key new key
      */
     public void setKey(String key) {
         this.key = key;
     }
 
     /**
-     * Метод изменения значения musicOnly
+     * Replaces the comment with the specified comment.
      *
-     * @param musicOnly - true, если трек не содержит слов, и false, если трек
-     * со словами
-     */
-    public void setMusicOnly(boolean musicOnly) {
-        this.musicOnly = musicOnly;
-    }
-
-    /**
-     * Метод изменения комментария
-     *
-     * @param comment - комментарий
+     * @param comment new comment
      */
     public void setComment(String comment) {
         this.comment = comment;
     }
 
     /**
-     * Метод сравнения объектов
+     * Indicates whether some other object is "equal to" this one.
      *
-     * @param obj - объект, с которым происходит сравнение
-     * @return true, если объекты одинаковы, и false, если объекты разные
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false
+     * otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -237,16 +219,13 @@ public class TechnicalInfo implements Serializable {
         if (!key.equals(other.key)) {
             return false;
         }
-        if (!musicOnly == other.musicOnly) {
-            return false;
-        }
         return true;
     }
 
     /**
-     * Метод получения строкового представления объекта
+     * Returns a string representation of the object.
      *
-     * @return строковое представление объекта
+     * @return a string representation of the object
      */
     @Override
     public String toString() {
@@ -263,9 +242,6 @@ public class TechnicalInfo implements Serializable {
             sb.append("\nТональность: ");
             sb.append(key);
         }
-        if (musicOnly) {
-
-        }
         if (!comment.isEmpty()) {
             sb.append("\nКомментарий: ");
             sb.append(comment);
@@ -274,9 +250,9 @@ public class TechnicalInfo implements Serializable {
     }
 
     /**
-     * Метод получения хэш-кода объекта
+     * Returns a hash code value for the object.
      *
-     * @return хэш-код объекта
+     * @return a hash code value for this object
      */
     @Override
     public int hashCode() {

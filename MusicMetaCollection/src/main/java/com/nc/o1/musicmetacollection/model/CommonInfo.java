@@ -271,6 +271,9 @@ public class CommonInfo implements Serializable {
         if (!albumInfo.equals(other.albumInfo)) {
             return false;
         }
+        if(!instrumental == other.instrumental){
+            return false;
+        }
         return true;
     }
 
@@ -286,6 +289,9 @@ public class CommonInfo implements Serializable {
         sb.append(albumInfo.toString());
         sb.append("\nНазвание: ");
         sb.append(title);
+        if (instrumental) {
+            sb.append(" (instrumental)");
+        }
         if (year != 0) {
             sb.append("\nГод: ");
             sb.append(year);
@@ -313,6 +319,9 @@ public class CommonInfo implements Serializable {
         result = prime * result + genre.hashCode();
         result = prime * result + title.hashCode();
         result = prime * result + year;
+        if (instrumental) {
+            result++;
+        }
         return result;
     }
 
