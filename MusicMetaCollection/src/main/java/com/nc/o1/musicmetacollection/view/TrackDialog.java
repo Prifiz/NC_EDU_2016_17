@@ -1,11 +1,6 @@
 package com.nc.o1.musicmetacollection.view;
 
 import com.nc.o1.musicmetacollection.controller.AddTrackController;
-import com.nc.o1.musicmetacollection.model.AlbumInfo;
-import com.nc.o1.musicmetacollection.model.Artist;
-import com.nc.o1.musicmetacollection.model.CommonInfo;
-import com.nc.o1.musicmetacollection.model.Composer;
-import com.nc.o1.musicmetacollection.model.TechnicalInfo;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
 import static com.nc.o1.musicmetacollection.view.Hello.mainFrame;
 import java.awt.Color;

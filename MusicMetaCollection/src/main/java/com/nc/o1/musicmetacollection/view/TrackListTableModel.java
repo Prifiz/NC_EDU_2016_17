@@ -1,7 +1,6 @@
 package com.nc.o1.musicmetacollection.view;
 
-import com.nc.o1.musicmetacollection.model.TrackInfo;
-import com.nc.o1.musicmetacollection.model.TrackList;
+import com.nc.o1.musicmetacollection.model.*;
 import javax.swing.table.AbstractTableModel;
 
 public class TrackListTableModel extends AbstractTableModel {

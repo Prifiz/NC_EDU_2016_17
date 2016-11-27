@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nc.o1.musicmetacollection.controller;
 
-import com.nc.o1.musicmetacollection.model.TrackInfo;
-import com.nc.o1.musicmetacollection.model.TrackList;
+import com.nc.o1.musicmetacollection.model.*;
 
 /**
  *
