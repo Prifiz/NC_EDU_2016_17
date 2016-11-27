@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 /**
  * Describes the window for addition new track.
@@ -38,8 +38,10 @@ public class TrackDialog extends javax.swing.JDialog {
     private javax.swing.JTextField albumInput;
     private javax.swing.JTextField coverPathInput;
     //Specific Controls
-    private javax.swing.JTextField bpmInput;
-    private javax.swing.JTextField latencyInput;
+    private javax.swing.JFormattedTextField bpmInput;
+    private javax.swing.JFormattedTextField latencyInputHour;
+    private javax.swing.JFormattedTextField latencyInputMin;
+    private javax.swing.JFormattedTextField latencyInputSec;
     private String year;
 
     public JTextField getArtistInput() {
@@ -134,9 +136,8 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(yearComboBox);
         panel.add(yearLabel);
 
-//        final JFormattedTextField bpm = new JFormattedTextField(new MaskFormatter("#####"));]
-//        bpm.setSize(70, 30);
-        bpmInput = createTextField();
+        bpmInput = new JFormattedTextField(new MaskFormatter("###"));
+        bpmInput.setSize(40, 30);
         bpmInput.setLocation(450, 310);
         bpmInput.setVisible(false);
         final JLabel bpmLabel = createLabel();
@@ -146,17 +147,28 @@ public class TrackDialog extends javax.swing.JDialog {
         panel.add(bpmInput);
         panel.add(bpmLabel);
 
-// final JFormattedTextField latencyInput = new JFormattedTextField(new SimpleDateFormat("HH:mm:ss"));
-//        latency = createTextField();
-//        latency.setSize(140, 30);
-        latencyInput = createTextField();
-        latencyInput.setLocation(100, 370);
-        latencyInput.setVisible(false);
+        latencyInputHour = new JFormattedTextField(new MaskFormatter("##"));
+        latencyInputMin = new JFormattedTextField(new MaskFormatter("##"));
+        latencyInputSec = new JFormattedTextField(new MaskFormatter("##"));
+        latencyInputHour.setValue("0");
+        latencyInputHour.setSize(30, 30);
+        latencyInputHour.setLocation(100, 370);
+        latencyInputHour.setVisible(false);
+        latencyInputMin.setValue("0");
+        latencyInputMin.setSize(30, 30);
+        latencyInputMin.setLocation(150, 370);
+        latencyInputMin.setVisible(false);
+        latencyInputSec.setValue("0");
+        latencyInputSec.setSize(30, 30);
+        latencyInputSec.setLocation(200, 370);
+        latencyInputSec.setVisible(false);
         final JLabel latencyLabel = createLabel();
         latencyLabel.setVisible(false);
         latencyLabel.setLocation(40, 370);
         latencyLabel.setText("Duration");
-        panel.add(latencyInput);
+        panel.add(latencyInputHour);
+        panel.add(latencyInputMin);
+        panel.add(latencyInputSec);
         panel.add(latencyLabel);
 
         String[] keys = {"C", "a", "F", "d", "G", "e", "B", "g", "D", "h", "Es", "c", "A",
