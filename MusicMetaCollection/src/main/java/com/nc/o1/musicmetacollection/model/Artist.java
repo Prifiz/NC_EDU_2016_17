@@ -7,44 +7,45 @@ public class Artist implements Serializable {
     private String name;
 
     /**
-     * Создание нового исполнителя
+     * Constructs an empty Artist.
      */
     public Artist() {
         name = "";
     }
 
     /**
-     * Создание нового исполнителя
+     * Constructs an Artist based on the provided artist name.
      *
-     * @param name - имя исполнителя
+     * @param name the artist name
      */
     public Artist(String name) {
         this.name = name;
     }
 
     /**
-     * Метод получения имени исполнителя
+     * Returns the artist name.
      *
-     * @return имя исполнителя
+     * @return an artist name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Метод изменения имени исполнителя
+     * Replaces the artist name with the specified artist name.
      *
-     * @param name - имя исполнителя
+     * @param name new artist name
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Метод сравнения объектов
+     * Indicates whether some other object is "equal to" this one.
      *
-     * @param obj - объект, с которым происходит сравнение
-     * @return true, если объекты одинаковы, и false, если объекты разные
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false
+     * otherwise.
      */
     @Override
     public boolean equals(Object obj) {
@@ -65,9 +66,9 @@ public class Artist implements Serializable {
     }
 
     /**
-     * Метод получения строкового представления объекта
+     * Returns a string representation of the object.
      *
-     * @return строковое представление объекта
+     * @return a string representation of the object
      */
     @Override
     public String toString() {
@@ -78,9 +79,9 @@ public class Artist implements Serializable {
     }
 
     /**
-     * Метод получения хэш-кода объекта
+     * Returns a hash code value for the object.
      *
-     * @return хэш-код объекта
+     * @return a hash code value for this object
      */
     @Override
     public int hashCode() {
