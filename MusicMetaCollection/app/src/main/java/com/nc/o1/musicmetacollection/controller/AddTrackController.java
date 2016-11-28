@@ -1,6 +1,11 @@
 package com.nc.o1.musicmetacollection.controller;
 
-import com.nc.o1.musicmetacollection.model.*;
+import com.nc.o1.musicmetacollection.model.AlbumInfo;
+import com.nc.o1.musicmetacollection.model.Artist;
+import com.nc.o1.musicmetacollection.model.CommonInfo;
+import com.nc.o1.musicmetacollection.model.Composer;
+import com.nc.o1.musicmetacollection.model.TechnicalInfo;
+import com.nc.o1.musicmetacollection.model.TrackInfo;
 import com.nc.o1.musicmetacollection.view.TrackDialog;
 
 /**
