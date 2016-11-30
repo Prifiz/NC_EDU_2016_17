@@ -74,7 +74,7 @@ public class Composer implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (!name.isEmpty()) {
-            sb.append("\nКомпозитор: ");
+            sb.append("\nComposer: ");
             sb.append(name);
         }
         return String.valueOf(sb);

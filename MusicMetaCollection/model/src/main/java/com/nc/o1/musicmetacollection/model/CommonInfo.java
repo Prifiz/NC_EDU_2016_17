@@ -287,17 +287,17 @@ public class CommonInfo implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(artist.toString());
         sb.append(albumInfo.toString());
-        sb.append("\nНазвание: ");
+        sb.append("\nTitle: ");
         sb.append(title);
         if (instrumental) {
             sb.append(" (instrumental)");
         }
         if (year != 0) {
-            sb.append("\nГод: ");
+            sb.append("\nYear: ");
             sb.append(year);
         }
         if (!genre.isEmpty()) {
-            sb.append("\nЖанр: ");
+            sb.append("\nGenre: ");
             sb.append(genre);
         }
         sb.append(composer.toString());

@@ -111,7 +111,7 @@ public class AlbumInfo implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (!album.isEmpty()) {
-            sb.append("\nАльбом: ");
+            sb.append("\nAlbum: ");
             sb.append(album);
         }
         return String.valueOf(sb);

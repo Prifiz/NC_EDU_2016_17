@@ -231,19 +231,19 @@ public class TechnicalInfo implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (latency != 0) {
-            sb.append("\nДлительность: ");
+            sb.append("\nDuration: ");
             sb.append(this.getStringLatency());
         }
         if (beatsPerMinute != 0) {
-            sb.append("\nУдаров в минуту: ");
+            sb.append("\nBPM: ");
             sb.append(beatsPerMinute);
         }
         if (!key.isEmpty()) {
-            sb.append("\nТональность: ");
+            sb.append("\nKey: ");
             sb.append(key);
         }
         if (!comment.isEmpty()) {
-            sb.append("\nКомментарий: ");
+            sb.append("\nComment: ");
             sb.append(comment);
         }
         return String.valueOf(sb);

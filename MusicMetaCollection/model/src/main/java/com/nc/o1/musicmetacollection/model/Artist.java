@@ -73,7 +73,7 @@ public class Artist implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Исполнитель: ");
+        sb.append("Artist: ");
         sb.append(name);
         return String.valueOf(sb);
     }

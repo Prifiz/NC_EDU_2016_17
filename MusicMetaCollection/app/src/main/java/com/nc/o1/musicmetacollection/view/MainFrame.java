@@ -55,7 +55,7 @@ public class MainFrame extends JFrame {
     private final JMenuItem helpMenu;
     private final JMenuItem fileExit;
 
-    TrackList allTracks, newTracks;
+    TrackList allTracks;
     //  String[][] data = new String[20][2];
     JTable table;
     //Массив, содержащий заголовки таблицы
@@ -130,7 +130,6 @@ public class MainFrame extends JFrame {
         });
         //</editor-fold>
         allTracks = new TrackList();
-        newTracks = new TrackList();
 
         frame.setLayout(new BorderLayout());
 
@@ -239,7 +238,7 @@ public class MainFrame extends JFrame {
     private void serializeToFile() {
         if (this.fileChooser.showSaveDialog(this) == 0) {
             try {
-                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.fileChooser.getSelectedFile().getAbsoluteFile() + ".bin"));
+                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.fileChooser.getSelectedFile().getAbsoluteFile()));
                 out.writeObject(allTracks);
                 out.close();
             } catch (IOException ex) {
@@ -344,11 +343,11 @@ public class MainFrame extends JFrame {
     }
 
     public void showNewTrack(TrackInfo track) {
-        newTracks.addTrackInfo(track);
-        showTracks(newTracks);
+        updateTrackList(track);
+        showTracks(allTracks);
     }
 
-    public void updateTrackList(TrackInfo track) {
+    private void updateTrackList(TrackInfo track) {
         if (track != null) {
             allTracks.addTrackInfo(track);
             track = null;

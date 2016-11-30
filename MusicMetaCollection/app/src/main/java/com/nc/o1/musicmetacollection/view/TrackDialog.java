@@ -294,8 +294,7 @@ public class TrackDialog extends javax.swing.JDialog {
         TrackInfo track = new TrackInfo();
         AddTrackController controller = new AddTrackController(track, this);
         controller.addTrack();
-       
-            mainFrame.updateTrackList(track);
+
             mainFrame.showNewTrack(track);
         
         mainFrame.setVisible(false);
