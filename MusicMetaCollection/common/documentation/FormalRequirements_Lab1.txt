@@ -1,0 +1,14 @@
+MVC
+JavaDocs
+Java Code Conventions
+Add
+Remove
+Edit
+Plain Search
+Regexp Search
+View
+Save/Load Serialized
+Save/Load XML
+User Friendly UI
+Unique Values
+Export/Import
