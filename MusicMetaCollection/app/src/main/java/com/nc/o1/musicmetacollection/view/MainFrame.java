@@ -155,7 +155,7 @@ public class MainFrame extends JFrame {
         JPanel radioPanel = new JPanel(new GridBagLayout());
         JPanel btnPnl = new JPanel(new BorderLayout());
         JPanel bottombtnPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        String[] searchParams = {"Artist", "Album", "Title", "Composer", "Genre", "Year", "BPM", "Duration", "Key", "Comment"};
+        String[] searchParams = {"Artist", "Album", "Title", "Composer", "Genre", "Year", "BPM", "Key", "Comment"};
         searchTrackParam = new JComboBox(searchParams);
 
         JButton show = new JButton("Show All");

@@ -5,7 +5,6 @@
  */
 package com.nc.o1.musicmetacollection.controller;
 
-import com.nc.o1.musicmetacollection.model.TrackInfo;
 import com.nc.o1.musicmetacollection.model.TrackList;
 
 /**
@@ -16,38 +15,44 @@ public class SearchTrackController {
 
     public TrackList substringSearch(TrackList trackList, String searchParam, String searchValue) {
         TrackList searchList = new TrackList();
-        TrackInfo currentTrack;
-        String searchString;
-        switch (searchParam) {
-            case "Artist":
-                searchString = null;
-                break;
-            case "Album":
-                break;
-            case "Title":
-                break;
-            case "Composer":
-                break;
-            case "Genre":
-                break;
-            case "Year":
-                break;
-            case "BPM":
-                break;
-            case "Duration":
-                break;
-            case "Key":
-                break;
-            case "Comment":
-                break;
-
-        }
+        String trackParam = new String();
         for (int i = 0; i < trackList.getSize(); i++) {
-            currentTrack = trackList.getTrackInfo(i);
-            for (int j = 0; j < currentTrack.toString().length() - searchValue.length() + 1; j++) {
-                if (currentTrack.toString().toUpperCase().substring(j, searchValue.length() + j).equals(searchValue.toUpperCase())) {
-                    searchList.addTrackInfo(currentTrack);
+            switch (searchParam) {
+                case "Artist":
+                    trackParam = trackList.getTrackInfo(i).getCommonInfo().getArtist().getName();
                     break;
+                case "Album":
+                    trackParam = trackList.getTrackInfo(i).getCommonInfo().getAlbumInfo().getAlbum();
+                    break;
+                case "Title":
+                    trackParam = trackList.getTrackInfo(i).getCommonInfo().getTitle();
+                    break;
+                case "Composer":
+                    trackParam = trackList.getTrackInfo(i).getCommonInfo().getComposer().getName();
+                    break;
+                case "Genre":
+                    trackParam = trackList.getTrackInfo(i).getCommonInfo().getGenre();
+                    break;
+                case "Year":
+                    trackParam = String.valueOf(trackList.getTrackInfo(i).getCommonInfo().getYear());
+                    break;
+                case "BPM":
+                    trackParam = String.valueOf(trackList.getTrackInfo(i).getTechnicalInfo().getBeatsPerMinute());
+                    break;
+                case "Key":
+                    trackParam = trackList.getTrackInfo(i).getTechnicalInfo().getKey();
+                    break;
+                case "Comment":
+                    trackParam = trackList.getTrackInfo(i).getTechnicalInfo().getComment();
+                    break;
+
+            }
+            if (trackParam.length() > searchValue.length()) {
+                for (int j = 0; j < trackParam.length() - searchValue.length() + 1; j++) {
+                    if (trackParam.toUpperCase().substring(j, searchValue.length() + j).equals(searchValue.toUpperCase())) {
+                        searchList.addTrackInfo(trackList.getTrackInfo(i));
+                        break;
+                    }
                 }
             }
         }
