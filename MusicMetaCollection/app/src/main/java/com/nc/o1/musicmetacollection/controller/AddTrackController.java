@@ -63,10 +63,26 @@ public class AddTrackController {
                 new Composer(composer), title, new AlbumInfo(album, coverPath),
                 genre, year, false));
         model.setTechnicalInfo(new TechnicalInfo(bpm, duration, key, comment));
-    }    
+    }
+
     //Service temp method
     public void printModel() {
         System.out.println(model);
+    }
+
+    public void addTrack(String artist, String composer, String title, String album, String cover, String genre, String strYear, boolean instrumental, String strBPM, String hh, String mm, String ss, String key, String comment) {
+        int year = 0;
+        if (!strYear.isEmpty()) {
+            year = Integer.parseInt(strYear);
+        }
+        int bpm = 0;
+        if (!strBPM.isEmpty()) {
+            bpm = Integer.parseInt(strBPM);
+        }
+        StringBuilder sbl = new StringBuilder();
+        sbl.append(hh).append(":").append(mm).append(":").append(ss);
+        String duration = sbl.toString();
+        TrackInfo newTrack = new TrackInfo(new CommonInfo(new Artist(artist), new Composer(composer), title, new AlbumInfo(album, cover), genre, year, instrumental), new TechnicalInfo(bpm, duration, key, comment));
     }
 
 }

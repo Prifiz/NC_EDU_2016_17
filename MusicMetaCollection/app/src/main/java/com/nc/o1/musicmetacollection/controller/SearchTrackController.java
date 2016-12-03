@@ -47,7 +47,6 @@ public class SearchTrackController {
 
     private boolean regexp(String searchValue, String trackParam) {
         Pattern p = Pattern.compile(searchValue);
-        System.out.println(searchValue + " " + trackParam + "\n");
         Matcher m = p.matcher(trackParam);
         return m.matches();
     }

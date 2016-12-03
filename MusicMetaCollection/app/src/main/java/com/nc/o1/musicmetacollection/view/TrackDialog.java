@@ -294,9 +294,22 @@ public class TrackDialog extends javax.swing.JDialog {
         TrackInfo track = new TrackInfo();
         AddTrackController controller = new AddTrackController(track, this);
         controller.addTrack();
+//        controller.addTrack(getArtistInput(),
+//                getComposerInput(),
+//                getTitleInput(),
+//                getAlbumInput(),
+//                getCoverPath(),
+//                getGenreInput(),
+//                getYearSelected(),
+//                false,
+//                getBpm(),
+//                getLatencyInputHour(),
+//                getLatencyInputMin(),
+//                getLatencyInputSec(),
+//                getKeySelected(),
+//                "");
+        mainFrame.showNewTrack(track);
 
-            mainFrame.showNewTrack(track);
-        
         mainFrame.setVisible(false);
         mainFrame.setResizable(false);
         dispose();
