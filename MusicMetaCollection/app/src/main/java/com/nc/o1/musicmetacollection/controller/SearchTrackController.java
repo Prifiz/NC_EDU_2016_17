@@ -14,9 +14,34 @@ import com.nc.o1.musicmetacollection.model.TrackList;
  */
 public class SearchTrackController {
 
-    public TrackList searchTracks(TrackList trackList, String searchValue) {
+    public TrackList substringSearch(TrackList trackList, String searchParam, String searchValue) {
         TrackList searchList = new TrackList();
         TrackInfo currentTrack;
+        String searchString;
+        switch (searchParam) {
+            case "Artist":
+                searchString = null;
+                break;
+            case "Album":
+                break;
+            case "Title":
+                break;
+            case "Composer":
+                break;
+            case "Genre":
+                break;
+            case "Year":
+                break;
+            case "BPM":
+                break;
+            case "Duration":
+                break;
+            case "Key":
+                break;
+            case "Comment":
+                break;
+
+        }
         for (int i = 0; i < trackList.getSize(); i++) {
             currentTrack = trackList.getTrackInfo(i);
             for (int j = 0; j < currentTrack.toString().length() - searchValue.length() + 1; j++) {
@@ -27,5 +52,9 @@ public class SearchTrackController {
             }
         }
         return searchList;
+    }
+
+    public TrackList regexpSearch(TrackList trackList, String searchValue, String param) {
+        return trackList;
     }
 }

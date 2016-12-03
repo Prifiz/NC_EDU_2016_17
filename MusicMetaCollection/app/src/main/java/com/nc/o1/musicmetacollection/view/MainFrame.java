@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -26,7 +27,9 @@ import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +38,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -48,6 +52,7 @@ public class MainFrame extends JFrame {
 
     private final JMenuBar topMenu;
 
+    private javax.swing.JComboBox<String> searchTrackParam;
     private final JMenu fileMenu, fileSaveMenu, fileLoadMenu;
     private JFileChooser fileChooser = new JFileChooser();
     private final JMenuItem fileSaveXML, fileSaveSrlz;
@@ -147,8 +152,12 @@ public class MainFrame extends JFrame {
         frame.setVisible(true);
         table.setBackground(color);
         JPanel searchPanel = new JPanel(new FlowLayout());
+        JPanel radioPanel = new JPanel(new GridBagLayout());
         JPanel btnPnl = new JPanel(new BorderLayout());
         JPanel bottombtnPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        String[] searchParams = {"Artist", "Album", "Title", "Composer", "Genre", "Year", "BPM", "Duration", "Key", "Comment"};
+        searchTrackParam = new JComboBox(searchParams);
+
         JButton show = new JButton("Show All");
         show.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -189,22 +198,32 @@ public class MainFrame extends JFrame {
                 clearBtActionPerformed(evt);
             }
         });
+
+        ButtonGroup group = new ButtonGroup();
+        JRadioButton searchBt = new JRadioButton("substring", true);
+        JRadioButton regexpBt = new JRadioButton("regexp", false);
+        group.add(searchBt);
+        group.add(regexpBt);
         searchText = new JTextField(20);
         show.setBackground(Color.white);
         add.setBackground(Color.white);
         del.setBackground(Color.white);
         search.setBackground(Color.white);
         clear.setBackground(Color.white);
+        searchPanel.add(new JLabel("Search: "));
+        searchPanel.add(searchTrackParam);
+        searchPanel.add(searchText);
+        searchPanel.add(search);
+        radioPanel.add(searchBt);
+        radioPanel.add(regexpBt);
         bottombtnPnl.add(clear);
         bottombtnPnl.add(show);
         bottombtnPnl.add(add);
         bottombtnPnl.add(del);
-        searchPanel.add(new JLabel("Search: "));
-        searchPanel.add(searchText);
-        searchPanel.add(search);
 
         btnPnl.add(searchPanel, BorderLayout.NORTH);
-        btnPnl.add(bottombtnPnl, BorderLayout.CENTER);
+        btnPnl.add(radioPanel, BorderLayout.CENTER);
+        btnPnl.add(bottombtnPnl, BorderLayout.SOUTH);
 
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -302,9 +321,10 @@ public class MainFrame extends JFrame {
         showTracks(allTracks);
     }
 
-    private void clearBtActionPerformed(java.awt.event.ActionEvent evt){
+    private void clearBtActionPerformed(java.awt.event.ActionEvent evt) {
         clearTable();
     }
+
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
@@ -318,7 +338,8 @@ public class MainFrame extends JFrame {
 
     private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {
         SearchTrackController sCtrl = new SearchTrackController();
-        TrackList schTracks = sCtrl.searchTracks(allTracks, searchText.getText());
+        String searchParam = searchTrackParam.getModel().getSelectedItem().toString();
+        TrackList schTracks = sCtrl.substringSearch(allTracks, searchParam, searchText.getText());
         if (schTracks.getSize() != 0) {
             showTracks(schTracks);
         } else {
