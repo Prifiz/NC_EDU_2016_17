@@ -53,6 +53,7 @@ public class MainFrame extends JFrame {
     private final JMenuBar topMenu;
 
     private javax.swing.JComboBox<String> searchTrackParam;
+    private JRadioButton searchBt, regexpBt;
     private final JMenu fileMenu, fileSaveMenu, fileLoadMenu;
     private JFileChooser fileChooser = new JFileChooser();
     private final JMenuItem fileSaveXML, fileSaveSrlz;
@@ -200,8 +201,8 @@ public class MainFrame extends JFrame {
         });
 
         ButtonGroup group = new ButtonGroup();
-        JRadioButton searchBt = new JRadioButton("substring", true);
-        JRadioButton regexpBt = new JRadioButton("regexp", false);
+        searchBt = new JRadioButton("substring", true);
+        regexpBt = new JRadioButton("regexp", false);
         group.add(searchBt);
         group.add(regexpBt);
         searchText = new JTextField(20);
@@ -339,7 +340,12 @@ public class MainFrame extends JFrame {
     private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {
         SearchTrackController sCtrl = new SearchTrackController();
         String searchParam = searchTrackParam.getModel().getSelectedItem().toString();
-        TrackList schTracks = sCtrl.substringSearch(allTracks, searchParam, searchText.getText());
+        TrackList schTracks = new TrackList();
+        if (searchBt.isSelected()) {
+            schTracks = sCtrl.substringSearch(allTracks, searchParam, searchText.getText());
+        } else {
+            schTracks = sCtrl.regexpSearch(allTracks, searchParam, searchText.getText());
+        }
         if (schTracks.getSize() != 0) {
             showTracks(schTracks);
         } else {
