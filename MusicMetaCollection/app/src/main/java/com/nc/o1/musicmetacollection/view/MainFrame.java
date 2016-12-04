@@ -366,9 +366,12 @@ public class MainFrame extends JFrame {
             try {
                 ShowTrackDialog showTrackDialog = new ShowTrackDialog(this, rootPaneCheckingEnabled, selectedTrack);
                 showTrackDialog.setVisible(true);
+                if(showTrackDialog.isEdited()){                    
+                    tModel.fireTableDataChanged();
+                }
             } catch (ParseException ex) {
                 System.err.println("formatter is bad: " + ex.getMessage());
-            }
+            }            
         }
     }
 

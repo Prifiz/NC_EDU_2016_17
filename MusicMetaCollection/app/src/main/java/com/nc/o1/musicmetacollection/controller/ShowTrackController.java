@@ -23,7 +23,6 @@ public class ShowTrackController {
         view.setGenre(model.getCommonInfo().getGenre());
         //Converting duration track
         //get from TechnicalInfo getStringLatency()
-        //algorithm incorrect
         int sec = model.getTechnicalInfo().getLatency();
         int min = 0;
         int hour = 0;
@@ -50,6 +49,7 @@ public class ShowTrackController {
         if (hour < 10) {
             hours.append("0");
         }
+        hours.append(hour);
         //End converting duration track
         view.setLatencyHour(hours.toString());
         view.setLatencyMin(minutes.toString());
@@ -63,11 +63,11 @@ public class ShowTrackController {
         view.setAlbum(model.getCommonInfo().getAlbumInfo().getAlbum());
         view.setCoverPath(model.getCommonInfo().getAlbumInfo().getCover());
         view.setComposer(model.getCommonInfo().getComposer().getName());
-        int bpm=model.getTechnicalInfo().getBeatsPerMinute();
-        if(bpm!=0){
+        int bpm = model.getTechnicalInfo().getBeatsPerMinute();
+        if (bpm != 0) {
             view.setBpm(String.valueOf(bpm));
-        }else{
-             view.setBpm("");
+        } else {
+            view.setBpm("");
         }
         view.setKey(model.getTechnicalInfo().getKey());
 

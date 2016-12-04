@@ -1,5 +1,6 @@
 package com.nc.o1.musicmetacollection.view.trackdialog;
 
+import com.nc.o1.musicmetacollection.controller.EditTrackController;
 import com.nc.o1.musicmetacollection.controller.ShowTrackView;
 import com.nc.o1.musicmetacollection.controller.ShowTrackController;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
@@ -18,6 +19,8 @@ public class ShowTrackDialog extends TrackDialog {
 
     private JButton editBtn;
     private TrackInfo track;
+
+    private boolean editFlag;
 
     public ShowTrackDialog(Frame parent, boolean modal, TrackInfo existTrack) throws ParseException {
         super(parent, modal);
@@ -63,8 +66,8 @@ public class ShowTrackDialog extends TrackDialog {
         editBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(rootPane, "Not supported yet.");
-                //editBtnActionPerformed(e);
+                //JOptionPane.showMessageDialog(rootPane, "Not supported yet.");
+                editBtnActionPerformed(e);
             }
 
         });
@@ -76,7 +79,23 @@ public class ShowTrackDialog extends TrackDialog {
     private void editBtnActionPerformed(ActionEvent e) {
         setTitle("Edit Track Info - " + APP_TITLE);
         editBtn.setVisible(false);
+
         artistInput.setEditable(true);
+        titleInput.setEditable(true);
+        latencyInputHour.setEditable(true);
+        latencyInputMin.setEditable(true);
+        latencyInputSec.setEditable(true);
+        genreInput.setEditable(true);
+        
+        yearComboBox.setEnabled(true);
+        
+        albumInput.setEditable(true);
+        coverPathInput.setEditable(true);
+        composerInput.setEditable(true);
+        bpmInput.setEditable(true);
+
+        keyComboBox.setEnabled(true);
+
         JButton saveBtn = new JButton("Save");
         saveBtn.setSize(100, 30);
         saveBtn.setLocation(312, 520);
@@ -90,7 +109,27 @@ public class ShowTrackDialog extends TrackDialog {
     }
 
     private void saveActionPerformed(ActionEvent e) {
-        System.out.println("Save Edited track ");
+        ShowTrackView view = new ShowTrackView();
+        EditTrackController editCntrl = new EditTrackController(track, view);
+        view.setArtist(artistInput.getText());
+        view.setTitle(titleInput.getText());
+        view.setGenre(genreInput.getText());
+        view.setLatencyHour(latencyInputHour.getText());
+        view.setLatencyMin(latencyInputMin.getText());
+        view.setLatencySec(latencyInputSec.getText());
+        view.setYear((String)yearComboBox.getSelectedItem());
+        view.setAlbum(albumInput.getText());
+        view.setCoverPath(coverPathInput.getText());
+        view.setComposer(composerInput.getText());
+        view.setBpm(bpmInput.getText());
+        view.setKey((String)keyComboBox.getSelectedItem());        
+        editCntrl.saveTrack();
+        editFlag=true;
+        dispose();
+    }
+
+    public boolean isEdited() {
+        return editFlag;
     }
 
 }
