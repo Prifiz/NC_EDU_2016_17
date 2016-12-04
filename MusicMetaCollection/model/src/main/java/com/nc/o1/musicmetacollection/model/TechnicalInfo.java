@@ -85,6 +85,7 @@ public class TechnicalInfo implements Serializable {
      * @return a string representation of the latency of the track
      */
     public String getStringLatency() {
+        //is the method actual?
         int sec = latency;
         int min = 0;
         int hour = 0;

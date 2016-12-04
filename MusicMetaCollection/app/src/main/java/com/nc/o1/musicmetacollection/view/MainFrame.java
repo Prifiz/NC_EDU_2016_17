@@ -10,6 +10,7 @@ import com.nc.o1.musicmetacollection.controller.RemoveTrackController;
 import com.nc.o1.musicmetacollection.controller.SearchTrackController;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
 import com.nc.o1.musicmetacollection.model.TrackList;
+import com.nc.o1.musicmetacollection.view.trackdialog.ShowTrackDialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -248,7 +249,7 @@ public class MainFrame extends JFrame {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                editTrackMouseDoubleClick(evt);
+                showTrackMouseDoubleClick(evt);
             }
         });
     }
@@ -332,7 +333,7 @@ public class MainFrame extends JFrame {
         try {
             AddTrackDialog newTrack = new AddTrackDialog(this, rootPaneCheckingEnabled);
             newTrack.setLocationRelativeTo(this);
-            newTrack.setVisible(true);           
+            newTrack.setVisible(true);
         } catch (java.text.ParseException exc) {
             System.err.println("formatter is bad: " + exc.getMessage());
             System.exit(-1);
@@ -356,12 +357,18 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void editTrackMouseDoubleClick(MouseEvent evt) {
+    private void showTrackMouseDoubleClick(MouseEvent evt) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1 && evt.getClickCount() == 2) {
+
             TrackListTableModel tModel = (TrackListTableModel) table.getModel();
-            //TrackDialog editTrack= new AddTrackDialog(this, rootPaneCheckingEnabled);
-            JOptionPane.showMessageDialog(rootPane, "Test");
+            TrackInfo selectedTrack= tModel.getTrackInfo(selectedRow);          
+            try {
+                ShowTrackDialog showTrackDialog = new ShowTrackDialog(this, rootPaneCheckingEnabled, selectedTrack);
+                showTrackDialog.setVisible(true);
+            } catch (ParseException ex) {
+                System.err.println("formatter is bad: " + ex.getMessage());
+            }
         }
     }
 
