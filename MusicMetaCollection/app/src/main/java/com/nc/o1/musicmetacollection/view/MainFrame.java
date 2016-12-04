@@ -5,6 +5,7 @@
  */
 package com.nc.o1.musicmetacollection.view;
 
+import com.nc.o1.musicmetacollection.view.trackdialog.AddTrackDialog;
 import com.nc.o1.musicmetacollection.controller.RemoveTrackController;
 import com.nc.o1.musicmetacollection.controller.SearchTrackController;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
@@ -329,9 +330,9 @@ public class MainFrame extends JFrame {
 
     private void addBtActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            TrackDialog newTrack = new TrackDialog(this, rootPaneCheckingEnabled);
+            AddTrackDialog newTrack = new AddTrackDialog(this, rootPaneCheckingEnabled);
             newTrack.setLocationRelativeTo(this);
-            newTrack.setVisible(true);
+            newTrack.setVisible(true);           
         } catch (java.text.ParseException exc) {
             System.err.println("formatter is bad: " + exc.getMessage());
             System.exit(-1);
@@ -359,7 +360,7 @@ public class MainFrame extends JFrame {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1 && evt.getClickCount() == 2) {
             TrackListTableModel tModel = (TrackListTableModel) table.getModel();
-            //TrackDialog editTrack= new TrackDialog(this, rootPaneCheckingEnabled);
+            //TrackDialog editTrack= new AddTrackDialog(this, rootPaneCheckingEnabled);
             JOptionPane.showMessageDialog(rootPane, "Test");
         }
     }

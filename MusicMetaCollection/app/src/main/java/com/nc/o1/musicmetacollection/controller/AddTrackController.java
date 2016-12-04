@@ -6,7 +6,6 @@ import com.nc.o1.musicmetacollection.model.CommonInfo;
 import com.nc.o1.musicmetacollection.model.Composer;
 import com.nc.o1.musicmetacollection.model.TechnicalInfo;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
-import com.nc.o1.musicmetacollection.view.TrackDialog;
 
 /**
  *
@@ -15,15 +14,15 @@ import com.nc.o1.musicmetacollection.view.TrackDialog;
 public class AddTrackController {
 
 //    private TrackInfo model;
-//    private TrackDialog view;
+//    private AddTrackDialog view;
 //
 //    /**
 //     * Creates controller for addition new track.
 //     *
 //     * @param model - track's information.
-//     * @param view - data from TrackDialog.
+//     * @param view - data from AddTrackDialog.
 //     */
-//    public AddTrackController(TrackInfo model, TrackDialog view) {
+//    public AddTrackController(TrackInfo model, AddTrackDialog view) {
 //        this.model = model;
 //        this.view = view;
 //    }

@@ -1,8 +1,5 @@
-package com.nc.o1.musicmetacollection.view;
+package com.nc.o1.musicmetacollection.view.trackdialog;
 
-import com.nc.o1.musicmetacollection.controller.AddTrackController;
-import com.nc.o1.musicmetacollection.model.TrackInfo;
-import static com.nc.o1.musicmetacollection.view.Hello.mainFrame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,33 +9,35 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
 /**
- * Describes the window for addition new track.
+ * Parent TrackDialog is used for Addition, Showing (Editing) track.
  *
- * @author Слава
+ * @author SteVL
  */
 public class TrackDialog extends javax.swing.JDialog {
 
-    private static final String APP_TITLE = "MusicMetaCollection";
+    //move to mainframe
+    public static final String APP_TITLE = "MusicMetaCollection";
 
-    private javax.swing.JTextField artistInput;
-    private javax.swing.JTextField titleInput;
-    private javax.swing.JTextField genreInput;
-    private javax.swing.JTextField composerInput;
-    private javax.swing.JTextField albumInput;
-    private javax.swing.JTextField coverPathInput;
+    protected javax.swing.JTextField artistInput;
+    protected javax.swing.JTextField titleInput;
+    protected javax.swing.JTextField genreInput;
+    protected javax.swing.JTextField composerInput;
+    protected javax.swing.JTextField albumInput;
+    protected javax.swing.JTextField coverPathInput;
     //Specific Controls
-    private javax.swing.JComboBox yearComboBox;
-    private javax.swing.JFormattedTextField bpmInput;
-    private javax.swing.JFormattedTextField latencyInputHour;
-    private javax.swing.JFormattedTextField latencyInputMin;
-    private javax.swing.JFormattedTextField latencyInputSec;
-    private javax.swing.JComboBox keyComboBox;
+    protected javax.swing.JComboBox yearComboBox;
+    protected javax.swing.JFormattedTextField bpmInput;
+    protected javax.swing.JFormattedTextField latencyInputHour;
+    protected javax.swing.JFormattedTextField latencyInputMin;
+    protected javax.swing.JFormattedTextField latencyInputSec;
+    protected javax.swing.JComboBox keyComboBox;
+
+    protected javax.swing.JPanel panel;
 
     public String getArtistInput() {
         return artistInput.getText();
@@ -90,12 +89,7 @@ public class TrackDialog extends javax.swing.JDialog {
 
     public TrackDialog(java.awt.Frame parent, boolean modal) throws ParseException {
         super(parent, modal);
-        //if(existTrack==null){
-        setTitle("New Track - MusicMetaCollection");
-//        else{
-//           this.setTitle("Edit Track - MusicMetaCollection"); 
-//        }
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setBackground(Color.lightGray);
         panel.setLayout(null);
 
@@ -252,25 +246,8 @@ public class TrackDialog extends javax.swing.JDialog {
         showAdvancedBtn.setSize(100, 30);
         showAdvancedBtn.setLocation(470, 130);
         panel.add(showAdvancedBtn);
-
-        JButton addBtn = new JButton("Add");
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                addTrackActionPerformed(evt);
-            }
-        }
-        );
-
-        addBtn.setBackground(Color.white);
-        addBtn.setSize(100, 30);
-        addBtn.setLocation(312, 520);
-        panel.add(addBtn);
-
         setContentPane(panel);
-
         setSize(700, 600);
-
     }
 
     private JTextField createTextField() {
@@ -284,33 +261,5 @@ public class TrackDialog extends javax.swing.JDialog {
         lab.setBackground(Color.white);
         lab.setSize(140, 20);
         return lab;
-    }
-
-    private void addTrackActionPerformed(ActionEvent evt) {
-        if (artistInput.getText().isEmpty() || titleInput.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Artist or Title are empty.", "Missing Data - " + APP_TITLE, 2);
-            return;
-        }
-        TrackInfo track = new TrackInfo();
-        AddTrackController addTrCtrl = new AddTrackController();
-        track = addTrCtrl.addTrack(getArtistInput(),
-                getComposerInput(),
-                getTitleInput(),
-                getAlbumInput(),
-                getCoverPath(),
-                getGenreInput(),
-                getYearSelected(),
-                false,
-                getBpm(),
-                getLatencyInputHour(),
-                getLatencyInputMin(),
-                getLatencyInputSec(),
-                getKeySelected(),
-                "");
-        mainFrame.showNewTrack(track);
-
-        mainFrame.setVisible(false);
-        mainFrame.setResizable(false);
-        dispose();
     }
 }
