@@ -5,6 +5,7 @@
  */
 package com.nc.o1.musicmetacollection.view;
 
+import com.nc.o1.musicmetacollection.controller.RemoveTrackController;
 import com.nc.o1.musicmetacollection.controller.SearchTrackController;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
 import com.nc.o1.musicmetacollection.model.TrackList;
@@ -340,7 +341,7 @@ public class MainFrame extends JFrame {
     private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {
         SearchTrackController sCtrl = new SearchTrackController();
         String searchParam = searchTrackParam.getModel().getSelectedItem().toString();
-        TrackList schTracks = new TrackList();
+        TrackList schTracks;
         if (searchBt.isSelected()) {
             schTracks = sCtrl.substringSearch(allTracks, searchParam, searchText.getText());
         } else {
@@ -364,9 +365,12 @@ public class MainFrame extends JFrame {
     }
 
     private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {
-        TrackListTableModel tltm = (TrackListTableModel) table.getModel();
-        tltm.removeRow(table.getSelectedRow());
-        table.setModel(tltm);
+        RemoveTrackController rTrCtrl = new RemoveTrackController();
+        allTracks = rTrCtrl.removeTrack(allTracks, table.getSelectedRow());
+        showTracks(allTracks);
+//        TrackListTableModel tltm = (TrackListTableModel) table.getModel();
+//        tltm.removeRow(table.getSelectedRow());
+//        table.setModel(tltm);
     }
 
     public void showNewTrack(TrackInfo track) {
