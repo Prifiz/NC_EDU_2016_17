@@ -5,6 +5,7 @@
  */
 package com.nc.o1.musicmetacollection.view;
 
+import com.nc.o1.musicmetacollection.controller.FileSrlzController;
 import com.nc.o1.musicmetacollection.view.trackdialog.AddTrackDialog;
 import com.nc.o1.musicmetacollection.controller.RemoveTrackController;
 import com.nc.o1.musicmetacollection.controller.SearchTrackController;
@@ -289,11 +290,9 @@ public class MainFrame extends JFrame {
         });
         int ret = chooser.showOpenDialog(topMenu);
         if (ret == JFileChooser.APPROVE_OPTION) {
-            FileInputStream fis;
+            FileSrlzController fileSrlzCntrl = new FileSrlzController();
             try {
-                fis = new FileInputStream(chooser.getSelectedFile().getAbsoluteFile());
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                allTracks = (TrackList) ois.readObject();
+                allTracks = fileSrlzCntrl.load(chooser.getSelectedFile().getAbsoluteFile());
                 showTracks(allTracks);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -362,16 +361,16 @@ public class MainFrame extends JFrame {
         if (selectedRow != -1 && evt.getClickCount() == 2) {
 
             TrackListTableModel tModel = (TrackListTableModel) table.getModel();
-            TrackInfo selectedTrack= tModel.getTrackInfo(selectedRow);          
+            TrackInfo selectedTrack = tModel.getTrackInfo(selectedRow);
             try {
                 ShowTrackDialog showTrackDialog = new ShowTrackDialog(this, rootPaneCheckingEnabled, selectedTrack);
                 showTrackDialog.setVisible(true);
-                if(showTrackDialog.isEdited()){                    
+                if (showTrackDialog.isEdited()) {
                     tModel.fireTableDataChanged();
                 }
             } catch (ParseException ex) {
                 System.err.println("formatter is bad: " + ex.getMessage());
-            }            
+            }
         }
     }
 
