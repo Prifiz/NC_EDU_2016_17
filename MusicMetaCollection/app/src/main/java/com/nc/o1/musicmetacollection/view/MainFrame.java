@@ -22,12 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -260,19 +255,36 @@ public class MainFrame extends JFrame {
     }
 
     private void serializeToFile() {
-        if (this.fileChooser.showSaveDialog(this) == 0) {
+
+    }
+
+    private void serializeActionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.isDirectory() || file.getAbsolutePath().endsWith(".bin");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Binary files (*.bin)";
+            }
+        });
+        int ret = chooser.showSaveDialog(topMenu);
+        if (ret == JFileChooser.APPROVE_OPTION) {
+            FileSrlzController fileSrlzCntrl = new FileSrlzController(allTracks);
+            File file = chooser.getSelectedFile().getAbsoluteFile();
+            String path = file.getPath();
+            if (!path.endsWith(".bin")) {
+                file = new File(path + ".bin");
+            }
             try {
-                ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.fileChooser.getSelectedFile().getAbsoluteFile()));
-                out.writeObject(allTracks);
-                out.close();
+                fileSrlzCntrl.save(file);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "File could not be write", "Error", 0);
             }
         }
-    }
-
-    private void serializeActionPerformed(java.awt.event.ActionEvent evt) {
-        this.serializeToFile();
     }
 
     private void fileLoadSrlzActiionPerformed(ActionEvent e) {
@@ -294,8 +306,6 @@ public class MainFrame extends JFrame {
             try {
                 allTracks = fileSrlzCntrl.load(chooser.getSelectedFile().getAbsoluteFile());
                 showTracks(allTracks);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
