@@ -36,7 +36,7 @@ public class EditTrackController {
         model.getCommonInfo().setComposer(composer);
         int bpm = 0;
         String bpmStr = view.getBpm();
-        if (!bpmStr.equals("")&&!bpmStr.startsWith(" ")) {
+        if (!bpmStr.equals("") && !bpmStr.startsWith(" ")) {
             bpm = Integer.parseInt(bpmStr);
         }
         model.getTechnicalInfo().setBeatsPerMinute(bpm);
@@ -53,7 +53,7 @@ public class EditTrackController {
         }
         int hh = 0;
         String hour = view.getLatencyHour();
-        System.out.println("'"+hour+"'");
+        System.out.println("'" + hour + "'");
         if (!hour.equals("")) {
             hh = Integer.parseInt(hour);
         }
