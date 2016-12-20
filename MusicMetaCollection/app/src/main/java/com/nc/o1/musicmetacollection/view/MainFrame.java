@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
     private final JMenuItem helpMenu;
     private final JMenuItem fileExit;
 
-    TrackList allTracks;
+    TrackList trackList, cleanList;
     //  String[][] data = new String[20][2];
     JTable table;
     //Массив, содержащий заголовки таблицы
@@ -134,13 +134,13 @@ public class MainFrame extends JFrame {
             }
         });
         //</editor-fold>
-        allTracks = new TrackList();
-
+        trackList = new TrackList();
+        cleanList = new TrackList();
         frame.setLayout(new BorderLayout());
 
         Color color = frame.getBackground();
         //Создаем новую таблицу на основе двумерного массива данных и заголовков
-        TrackListTableModel tltm = new TrackListTableModel(allTracks);
+        TrackListTableModel tltm = new TrackListTableModel(trackList);
         table = new JTable(tltm);
         //Создаем панель прокрутки и включаем в ее состав нашу таблицу
         JScrollPane jscrlp = new JScrollPane(table);
@@ -273,7 +273,7 @@ public class MainFrame extends JFrame {
         });
         int ret = chooser.showSaveDialog(topMenu);
         if (ret == JFileChooser.APPROVE_OPTION) {
-            FileSrlzController fileSrlzCntrl = new FileSrlzController(allTracks);
+            FileSrlzController fileSrlzCntrl = new FileSrlzController(trackList);
             File file = chooser.getSelectedFile().getAbsoluteFile();
             String path = file.getPath();
             if (!path.endsWith(".bin")) {
@@ -304,8 +304,8 @@ public class MainFrame extends JFrame {
         if (ret == JFileChooser.APPROVE_OPTION) {
             FileSrlzController fileSrlzCntrl = new FileSrlzController();
             try {
-                allTracks = fileSrlzCntrl.load(chooser.getSelectedFile().getAbsoluteFile());
-                showTracks(allTracks);
+                trackList = fileSrlzCntrl.load(chooser.getSelectedFile().getAbsoluteFile());
+                showTracks(trackList);
             } catch (IOException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -327,11 +327,11 @@ public class MainFrame extends JFrame {
     }
 
     private void clearTable() {
-        showTracks(new TrackList());
+        showTracks(cleanList);
     }
 
     private void showBtActionPerformed(java.awt.event.ActionEvent evt) {
-        showTracks(allTracks);
+        showTracks(trackList);
     }
 
     private void clearBtActionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,9 +354,9 @@ public class MainFrame extends JFrame {
         String searchParam = searchTrackParam.getModel().getSelectedItem().toString();
         TrackList schTracks;
         if (searchBt.isSelected()) {
-            schTracks = sCtrl.substringSearch(allTracks, searchParam, searchText.getText());
+            schTracks = sCtrl.substringSearch(trackList, searchParam, searchText.getText());
         } else {
-            schTracks = sCtrl.regexpSearch(allTracks, searchParam, searchText.getText());
+            schTracks = sCtrl.regexpSearch(trackList, searchParam, searchText.getText());
         }
         if (!schTracks.isEmpty()) {
             showTracks(schTracks);
@@ -386,8 +386,8 @@ public class MainFrame extends JFrame {
 
     private void deleteBtActionPerformed(java.awt.event.ActionEvent evt) {
         RemoveTrackController rTrCtrl = new RemoveTrackController();
-        allTracks = rTrCtrl.removeTrack(allTracks, table.getSelectedRow());
-        showTracks(allTracks);
+        trackList = rTrCtrl.removeTrack(trackList, table.getSelectedRow());
+        showTracks(trackList);
 //        TrackListTableModel tltm = (TrackListTableModel) table.getModel();
 //        tltm.removeRow(table.getSelectedRow());
 //        table.setModel(tltm);
@@ -395,12 +395,12 @@ public class MainFrame extends JFrame {
 
     public void showNewTrack(TrackInfo track) {
         updateTrackList(track);
-        showTracks(allTracks);
+        showTracks(trackList);
     }
 
     private void updateTrackList(TrackInfo track) {
         if (track != null) {
-            allTracks.addTrackInfo(track);
+            trackList.addTrackInfo(track);
             track = null;
         }
     }
