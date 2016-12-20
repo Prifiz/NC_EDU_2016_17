@@ -6,13 +6,13 @@ import java.util.List;
 
 public class TrackList implements Serializable {
 
-    private List<TrackInfo> tracks;
+    private List<TrackInfo> trackList;
 
     /**
      * Constructs an empty TrackList.
      */
     public TrackList() {
-        tracks = new ArrayList<TrackInfo>();
+        trackList = new ArrayList<TrackInfo>();
     }
 
     /**
@@ -21,7 +21,7 @@ public class TrackList implements Serializable {
      * @param trackInfo TrackInfo to be appended to this TrackList
      */
     public void addTrackInfo(TrackInfo trackInfo) {
-        tracks.add(trackInfo);
+        trackList.add(trackInfo);
     }
 
     /**
@@ -31,7 +31,7 @@ public class TrackList implements Serializable {
      * @return the TrackInfo at the specified position in this TrackList
      */
     public TrackInfo getTrackInfo(int index) {
-        return tracks.get(index);
+        return trackList.get(index);
     }
 
     /**
@@ -42,7 +42,7 @@ public class TrackList implements Serializable {
      * @param trackInfo TrackInfo to be stored at the specified position
      */
     public void setTrackInfo(int index, TrackInfo trackInfo) {
-        tracks.set(index, trackInfo);
+        trackList.set(index, trackInfo);
     }
 
     /**
@@ -52,7 +52,7 @@ public class TrackList implements Serializable {
      * @param index index of the TrackInfo to be removed
      */
     public void removeTrackInfo(int index) {
-        tracks.remove(index);
+        trackList.remove(index);
     }
 
     /**
@@ -60,8 +60,27 @@ public class TrackList implements Serializable {
      *
      * @return the number of TracksInfo in this TrackList
      */
-    public int getSize() {
-        return tracks.size();
+    public int size() {
+        return trackList.size();
+    }
+
+    /**
+     * Returns true if this TrackList contains no TrackInfo.
+     *
+     * @return true if this TrackList contains no TrackInfo
+     */
+    public boolean isEmpty() {
+        return trackList.isEmpty();
+    }
+
+    /**
+     * Returns true if this TrackList contains the specified TrackInfo.
+     *
+     * @param trackInfo TrackInfo whose presence in this list is to be tested
+     * @return true if this TrackList contains the specified TrackInfo
+     */
+    public boolean containsTrackInfo(TrackInfo trackInfo) {
+        return trackList.contains(trackInfo);
     }
 
 }
