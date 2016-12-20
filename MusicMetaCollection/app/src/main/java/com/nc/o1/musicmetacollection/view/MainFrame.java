@@ -358,7 +358,7 @@ public class MainFrame extends JFrame {
         } else {
             schTracks = sCtrl.regexpSearch(allTracks, searchParam, searchText.getText());
         }
-        if (schTracks.getSize() != 0) {
+        if (!schTracks.isEmpty()) {
             showTracks(schTracks);
         } else {
             clearTable();

@@ -18,7 +18,7 @@ public class SearchTrackController {
     public TrackList substringSearch(TrackList trackList, String searchParam, String searchValue) {
         TrackList searchList = new TrackList();
         String trackParam;
-        for (int i = 0; i < trackList.getSize(); i++) {
+        for (int i = 0; i < trackList.size(); i++) {
             trackParam = trackParam(i, searchParam, trackList);
             if (trackParam.length() >= searchValue.length()) {
                 for (int j = 0; j < trackParam.length() - searchValue.length() + 1; j++) {
@@ -35,7 +35,7 @@ public class SearchTrackController {
     public TrackList regexpSearch(TrackList trackList, String searchParam, String searchValue) {
         TrackList searchList = new TrackList();
         String trackParam;
-        for (int i = 0; i < trackList.getSize(); i++) {
+        for (int i = 0; i < trackList.size(); i++) {
             trackParam = trackParam(i, searchParam, trackList);
             if (regexp(searchValue, trackParam)) {
                 searchList.addTrackInfo(trackList.getTrackInfo(i));

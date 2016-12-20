@@ -14,7 +14,7 @@ public class TrackListTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return trackList.getSize();
+        return trackList.size();
     }
 
     @Override
@@ -79,14 +79,14 @@ public class TrackListTableModel extends AbstractTableModel {
     }
 
     public TrackInfo getTrackInfo(int rowIndex) {
-        if (rowIndex >= 0 && rowIndex < trackList.getSize()) {
+        if (rowIndex >= 0 && rowIndex < trackList.size()) {
             return trackList.getTrackInfo(rowIndex);
         }
         return null;
     }
     
     public void removeRow(int rowIndex){
-        if (rowIndex >= 0 && rowIndex < trackList.getSize()) {
+        if (rowIndex >= 0 && rowIndex < trackList.size()) {
             trackList.removeTrackInfo(rowIndex);
             fireTableDataChanged();
             
