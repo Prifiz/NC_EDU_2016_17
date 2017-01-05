@@ -2,7 +2,7 @@ package com.nc.o1.musicmetacollection.model;
 
 import java.io.Serializable;
 
-public class Composer implements Serializable {
+public class Composer implements Author, Serializable {
 
     private String name;
 
@@ -27,6 +27,7 @@ public class Composer implements Serializable {
      *
      * @return a composer name
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -36,6 +37,7 @@ public class Composer implements Serializable {
      *
      * @param name new composer name
      */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
