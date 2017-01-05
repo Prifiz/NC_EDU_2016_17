@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nc.o1.musicmetacollection.view;
 
 import com.nc.o1.musicmetacollection.controller.FileSrlzController;
@@ -24,6 +19,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
@@ -43,10 +41,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 
-/**
- *
- * @author Слава
- */
 public class MainFrame extends JFrame {
 
     private final JMenuBar topMenu;
@@ -54,25 +48,23 @@ public class MainFrame extends JFrame {
     private javax.swing.JComboBox<String> searchTrackParam;
     private JRadioButton searchBt, regexpBt;
     private final JMenu fileMenu, fileSaveMenu, fileLoadMenu;
-    private JFileChooser fileChooser = new JFileChooser();
+    private JFileChooser fileChooser;
     private final JMenuItem fileSaveXML, fileSaveSrlz;
     private final JMenuItem fileLoadXML, fileLoadSrlz;
     private final JMenuItem helpMenu;
     private final JMenuItem fileExit;
 
-    TrackList trackList, cleanList;
-    //  String[][] data = new String[20][2];
-    JTable table;
-    //Массив, содержащий заголовки таблицы
-    //  Object[] headers = {"Artist", "Title"};
-    JFrame frame;
-    JTextField searchText;
+    private TrackList trackList, cleanList;
+    private Vector searchParamsList;
+    private JTable table;
+    private JFrame frame;
+    private JTextField searchText;
 
     /**
      * Creates Main Window.
      */
     public MainFrame() {
-        frame = new JFrame();
+        this.initComponents();
         //<editor-fold defaultstate="collapsed" desc="topMenu">
         topMenu = new JMenuBar();
         frame.setJMenuBar(topMenu);
@@ -134,8 +126,6 @@ public class MainFrame extends JFrame {
             }
         });
         //</editor-fold>
-        trackList = new TrackList();
-        cleanList = new TrackList();
         frame.setLayout(new BorderLayout());
 
         Color color = frame.getBackground();
@@ -155,8 +145,8 @@ public class MainFrame extends JFrame {
         JPanel radioPanel = new JPanel(new GridBagLayout());
         JPanel btnPnl = new JPanel(new BorderLayout());
         JPanel bottombtnPnl = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        String[] searchParams = {"Artist", "Album", "Title", "Composer", "Genre", "Year", "BPM", "Key", "Comment"};
-        searchTrackParam = new JComboBox(searchParams);
+        
+        searchTrackParam = new JComboBox(searchParamsList);
 
         JButton show = new JButton("Show All");
         show.addActionListener(new java.awt.event.ActionListener() {
@@ -248,6 +238,28 @@ public class MainFrame extends JFrame {
                 showTrackMouseDoubleClick(evt);
             }
         });
+    }
+
+    private void initComponents() {
+        frame = new JFrame();
+        trackList = new TrackList();
+        cleanList = new TrackList();
+        fileChooser = new JFileChooser();
+        searchParamsList = this.getSearchParamsList();
+    }
+
+    private Vector getSearchParamsList() {
+        Vector<String> searchParamsList = new Vector<>();
+        searchParamsList.add("Artist");
+        searchParamsList.add("Album");
+        searchParamsList.add("Title");
+        searchParamsList.add("Composer");
+        searchParamsList.add("Genre");
+        searchParamsList.add("Year");
+        searchParamsList.add("BPM");
+        searchParamsList.add("Key");
+        searchParamsList.add("Comment");
+        return searchParamsList;
     }
 
     private void fileExitActionPerformed(java.awt.event.ActionEvent evt) {
