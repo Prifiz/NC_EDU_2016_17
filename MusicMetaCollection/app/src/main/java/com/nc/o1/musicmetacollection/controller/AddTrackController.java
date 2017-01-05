@@ -63,11 +63,6 @@ public class AddTrackController {
 //                genre, year, false));
 //        model.setTechnicalInfo(new TechnicalInfo(bpm, duration, key, comment));
 //    }
-//
-//    //Service temp method
-//    public void printModel() {
-//        System.out.println(model);
-//    }
     public TrackInfo addTrack(String artist, String composer, String title, String album, String cover, String genre, String strYear, boolean instrumental, String strBPM, String hh, String mm, String ss, String key, String comment) {
         int year = 0;
         if (!strYear.isEmpty()) {

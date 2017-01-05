@@ -21,11 +21,8 @@ public class SearchTrackController {
         for (int i = 0; i < trackList.size(); i++) {
             trackParam = trackParam(i, searchParam, trackList);
             if (trackParam.length() >= searchValue.length()) {
-                for (int j = 0; j < trackParam.length() - searchValue.length() + 1; j++) {
-                    if (trackParam.toUpperCase().substring(j, searchValue.length() + j).equals(searchValue.toUpperCase())) {
-                        searchList.addTrackInfo(trackList.getTrackInfo(i));
-                        break;
-                    }
+                if (trackParam.toUpperCase().contains(searchValue.toUpperCase())) {
+                    searchList.addTrackInfo(trackList.getTrackInfo(i));
                 }
             }
         }
