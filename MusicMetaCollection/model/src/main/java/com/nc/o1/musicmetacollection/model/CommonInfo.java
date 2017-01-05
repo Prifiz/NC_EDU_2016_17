@@ -319,9 +319,7 @@ public class CommonInfo implements Serializable {
         result = prime * result + genre.hashCode();
         result = prime * result + title.hashCode();
         result = prime * result + year;
-        if (instrumental) {
-            result++;
-        }
+        result = prime * result + (instrumental ? 1:0);
         return result;
     }
 
