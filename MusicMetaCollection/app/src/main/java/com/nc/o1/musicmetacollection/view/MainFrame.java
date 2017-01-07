@@ -362,13 +362,13 @@ public class MainFrame extends JFrame {
     }
 
     private void searchBtActionPerformed(java.awt.event.ActionEvent evt) {
-        SearchTrackController sCtrl = new SearchTrackController();
+        SearchTrackController sCtrl = new SearchTrackController(trackList);
         String searchParam = searchTrackParam.getModel().getSelectedItem().toString();
         TrackList schTracks;
         if (searchBt.isSelected()) {
-            schTracks = sCtrl.substringSearch(trackList, searchParam, searchText.getText());
+            schTracks = sCtrl.substringSearch(searchParam, searchText.getText());
         } else {
-            schTracks = sCtrl.regexpSearch(trackList, searchParam, searchText.getText());
+            schTracks = sCtrl.regexpSearch(searchParam, searchText.getText());
         }
         if (!schTracks.isEmpty()) {
             showTracks(schTracks);

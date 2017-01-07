@@ -6,6 +6,8 @@
 package com.nc.o1.musicmetacollection.controller;
 
 import com.nc.o1.musicmetacollection.model.TrackList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -15,11 +17,35 @@ import java.util.regex.Matcher;
  */
 public class SearchTrackController {
 
-    public TrackList substringSearch(TrackList trackList, String searchParam, String searchValue) {
+    Map<Integer, Map<String, String>> trackMap = new HashMap();
+    TrackList trackList;
+
+    public SearchTrackController(TrackList trackList) {
+        this.trackList = trackList;
+        this.createMapOfTrackList(trackList);
+    }
+
+    private void createMapOfTrackList(TrackList trackList) {
+        for (int i = 0; i < trackList.size(); i++) {
+            Map<String, String> map = new HashMap();
+            map.put("Artist", trackList.getTrackInfo(i).getCommonInfo().getArtist().getName());
+            map.put("Album", trackList.getTrackInfo(i).getCommonInfo().getAlbumInfo().getAlbum());
+            map.put("Title", trackList.getTrackInfo(i).getCommonInfo().getTitle());
+            map.put("Composer", trackList.getTrackInfo(i).getCommonInfo().getComposer().getName());
+            map.put("Genre", trackList.getTrackInfo(i).getCommonInfo().getGenre());
+            map.put("Year", String.valueOf(trackList.getTrackInfo(i).getCommonInfo().getYear()));
+            map.put("BPM", String.valueOf(trackList.getTrackInfo(i).getTechnicalInfo().getBeatsPerMinute()));
+            map.put("Key", trackList.getTrackInfo(i).getTechnicalInfo().getKey());
+            map.put("Comment", trackList.getTrackInfo(i).getTechnicalInfo().getComment());
+            trackMap.put(i, map);
+        }
+    }
+
+    public TrackList substringSearch(String searchParam, String searchValue) {
         TrackList searchList = new TrackList();
         String trackParam;
         for (int i = 0; i < trackList.size(); i++) {
-            trackParam = trackParam(i, searchParam, trackList);
+            trackParam = trackMap.get(i).get(searchParam);
             if (trackParam.length() >= searchValue.length()) {
                 if (trackParam.toUpperCase().contains(searchValue.toUpperCase())) {
                     searchList.addTrackInfo(trackList.getTrackInfo(i));
@@ -29,11 +55,11 @@ public class SearchTrackController {
         return searchList;
     }
 
-    public TrackList regexpSearch(TrackList trackList, String searchParam, String searchValue) {
+    public TrackList regexpSearch(String searchParam, String searchValue) {
         TrackList searchList = new TrackList();
         String trackParam;
         for (int i = 0; i < trackList.size(); i++) {
-            trackParam = trackParam(i, searchParam, trackList);
+            trackParam = trackMap.get(i).get(searchParam);
             if (regexp(searchValue, trackParam)) {
                 searchList.addTrackInfo(trackList.getTrackInfo(i));
                 break;
@@ -46,39 +72,5 @@ public class SearchTrackController {
         Pattern p = Pattern.compile(searchValue);
         Matcher m = p.matcher(trackParam);
         return m.matches();
-    }
-
-    private String trackParam(int i, String searchParam, TrackList trackList) {
-        String trackParam = "";
-        switch (searchParam) {
-            case "Artist":
-                trackParam = trackList.getTrackInfo(i).getCommonInfo().getArtist().getName();
-                break;
-            case "Album":
-                trackParam = trackList.getTrackInfo(i).getCommonInfo().getAlbumInfo().getAlbum();
-                break;
-            case "Title":
-                trackParam = trackList.getTrackInfo(i).getCommonInfo().getTitle();
-                break;
-            case "Composer":
-                trackParam = trackList.getTrackInfo(i).getCommonInfo().getComposer().getName();
-                break;
-            case "Genre":
-                trackParam = trackList.getTrackInfo(i).getCommonInfo().getGenre();
-                break;
-            case "Year":
-                trackParam = String.valueOf(trackList.getTrackInfo(i).getCommonInfo().getYear());
-                break;
-            case "BPM":
-                trackParam = String.valueOf(trackList.getTrackInfo(i).getTechnicalInfo().getBeatsPerMinute());
-                break;
-            case "Key":
-                trackParam = trackList.getTrackInfo(i).getTechnicalInfo().getKey();
-                break;
-            case "Comment":
-                trackParam = trackList.getTrackInfo(i).getTechnicalInfo().getComment();
-                break;
-        }
-        return trackParam;
     }
 }
