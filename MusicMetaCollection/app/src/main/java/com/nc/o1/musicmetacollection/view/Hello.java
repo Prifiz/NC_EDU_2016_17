@@ -1,25 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.nc.o1.musicmetacollection.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -36,22 +24,13 @@ public class Hello extends JFrame {
 
     public static MainFrame mainFrame;
 
-    private static Socket s;
+    private static Socket socket;
     private static DataInputStream dis;
     private static DataOutputStream dos;
 
-    /**
-     * Button sends data to server.
-     */
-    private JButton srvBtn;
-    /**
-     * Label for server response.
-     */
-    private JLabel srvResponseLabel;
-    /**
-     * Input field for test connection with server.
-     */
-    private JTextField inputTestCon;
+    private JButton sendServerButton;
+    private JLabel responseServerLabel;
+    private JTextField msgToServerInput;
 
     public Hello() {
         super("Start Page - MusicMetaCollection");
@@ -68,35 +47,37 @@ public class Hello extends JFrame {
         label.setLocation(321, 200);
         panel.add(label);
 
-        inputTestCon = new JTextField();
-        inputTestCon.setSize(100, 30);
-        inputTestCon.setLocation(200, 400);
-        panel.add(inputTestCon);
+        msgToServerInput = new JTextField();
+        msgToServerInput.setSize(100, 30);
+        msgToServerInput.setLocation(200, 400);
+        panel.add(msgToServerInput);
 
-        srvResponseLabel = new JLabel();
-        srvResponseLabel.setSize(300, 30);
-        srvResponseLabel.setLocation(200, 380);
-        panel.add(srvResponseLabel);
+        responseServerLabel = new JLabel();
+        responseServerLabel.setSize(300, 30);
+        responseServerLabel.setLocation(200, 380);
+        panel.add(responseServerLabel);
 
-        srvBtn = new JButton("Test connection");
-        srvBtn.setSize(150, 30);
-        srvBtn.setLocation(400, 400);
-        panel.add(srvBtn);
-        srvBtn.addActionListener(new ActionListener() {
+        sendServerButton = new JButton("Test connection");
+        sendServerButton.setSize(150, 30);
+        sendServerButton.setLocation(400, 400);
+        panel.add(sendServerButton);
+        sendServerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Server test button pressed.");
                 try {
-                    String msgout = inputTestCon.getText();
+                    String msgout = msgToServerInput.getText();
                     dos.writeUTF(msgout);
                     String msgin = dis.readUTF();
                     //inputTestCon.setText(msgin);
-                    srvResponseLabel.setText(msgin);
+                    responseServerLabel.setText(msgin);
                 } catch (IOException ex) {
-                    Logger.getLogger(Hello.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("******Exception: after button pressed. " + ex);
+                } catch (NullPointerException ex) {
+                    //
                 }
             }
         });
-
         JButton button = new JButton("Next");
         button.setBackground(Color.white);
         button.setSize(80, 30);
@@ -148,35 +129,17 @@ public class Hello extends JFrame {
                 hello.setResizable(false);
             }
         });
+
         System.out.println("Starting client...");
-
-        String msgout;
-
-        s = null;
+        socket = null;
         try {
-            s = new Socket("127.0.0.1", 1234);
-            dis = new DataInputStream(s.getInputStream());
-            dos = new DataOutputStream(s.getOutputStream());
+            socket = new Socket("127.0.0.1", 1234);
+            dis = new DataInputStream(socket.getInputStream());
+            dos = new DataOutputStream(socket.getOutputStream());
             System.out.println("Waiting messages to server");
-            
         } catch (IOException ex) {
             System.err.println("Error:********* " + ex);
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Server isn't running. Restart app with running server before.");
+            JOptionPane.showMessageDialog(null, "There is no connection. Offline mode.");
         }
-
-        //      Scanner sc = new Scanner(System.in);
-/*
-        while(true) {
-            System.out.print("Msg: ");
-            msgout = sc.nextLine();
-            
-            dos.writeUTF(msgout);
-            if(msgout.equalsIgnoreCase("stop")){
-                break;
-            }
-            System.out.println(dis.readUTF());
-        }
-         */
     }
 }
