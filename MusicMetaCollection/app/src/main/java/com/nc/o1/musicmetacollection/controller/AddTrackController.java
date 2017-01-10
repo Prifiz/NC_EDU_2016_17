@@ -6,6 +6,7 @@ import com.nc.o1.musicmetacollection.model.CommonInfo;
 import com.nc.o1.musicmetacollection.model.Composer;
 import com.nc.o1.musicmetacollection.model.TechnicalInfo;
 import com.nc.o1.musicmetacollection.model.TrackInfo;
+import com.nc.o1.musicmetacollection.model.TrackList;
 
 /**
  *
@@ -75,7 +76,12 @@ public class AddTrackController {
         StringBuilder sbl = new StringBuilder();
         sbl.append(hh).append(":").append(mm).append(":").append(ss);
         String duration = sbl.toString();
-        TrackInfo newTrack = new TrackInfo(new CommonInfo(new Artist(artist), new Composer(composer), title, new AlbumInfo(album, cover), genre, year, instrumental), new TechnicalInfo(bpm, duration, key, comment));
+        Artist newArtist = new Artist(artist);
+        Composer newComposer = new Composer(composer);
+        AlbumInfo newAlbum = new AlbumInfo(album, cover);
+        CommonInfo newCommonInfo = new CommonInfo(newArtist, newComposer, title, newAlbum, genre, year, instrumental);
+        TechnicalInfo newTechnicalInfo = new TechnicalInfo(bpm, duration, key, comment);
+        TrackInfo newTrack = new TrackInfo(newCommonInfo, newTechnicalInfo);
         return newTrack;
     }
 

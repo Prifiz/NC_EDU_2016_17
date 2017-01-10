@@ -381,7 +381,6 @@ public class MainFrame extends JFrame {
     private void showTrackMouseDoubleClick(MouseEvent evt) {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1 && evt.getClickCount() == 2) {
-
             TrackListTableModel tModel = (TrackListTableModel) table.getModel();
             TrackInfo selectedTrack = tModel.getTrackInfo(selectedRow);
             try {
@@ -400,9 +399,6 @@ public class MainFrame extends JFrame {
         RemoveTrackController rTrCtrl = new RemoveTrackController();
         trackList = rTrCtrl.removeTrack(trackList, table.getSelectedRow());
         showTracks(trackList);
-//        TrackListTableModel tltm = (TrackListTableModel) table.getModel();
-//        tltm.removeRow(table.getSelectedRow());
-//        table.setModel(tltm);
     }
 
     public void showNewTrack(TrackInfo track) {
