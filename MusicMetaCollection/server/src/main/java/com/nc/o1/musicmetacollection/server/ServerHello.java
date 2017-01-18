@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import org.apache.log4j.Logger;
 
 /**
  * Server checks string recieved from clients.
@@ -11,6 +12,11 @@ import java.util.Scanner;
  * @author SteVL
  */
 public class ServerHello implements Runnable {
+    
+    /**
+     *
+     */
+    public static final Logger LOG=Logger.getLogger(ServerHello.class);
 
     private volatile boolean stopFlag;
 
