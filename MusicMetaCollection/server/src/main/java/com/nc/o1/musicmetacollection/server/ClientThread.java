@@ -23,11 +23,14 @@ public class ClientThread implements Runnable {
     @Override
     public void run() {
         String inputMsg, outputMsg;
+        System.out.println("Client connected");
+         System.out.println("Waiting for messages");
         while (socket != null) {
             try {
+                
                 dis = new DataInputStream(socket.getInputStream());
                 dos = new DataOutputStream(socket.getOutputStream());
-                System.out.println("Waiting for messages");
+               
                 while (true) {
                     inputMsg = dis.readUTF();
                     System.out.println("client: " + inputMsg);
