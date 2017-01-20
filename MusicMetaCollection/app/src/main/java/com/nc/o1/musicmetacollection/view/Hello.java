@@ -15,12 +15,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Слава
  */
 public class Hello extends JFrame {
+
+    public static final Logger log = Logger.getLogger(Hello.class);
 
     public static MainFrame mainFrame;
 
@@ -138,7 +141,9 @@ public class Hello extends JFrame {
             dos = new DataOutputStream(socket.getOutputStream());
             System.out.println("Waiting messages to server");
         } catch (IOException ex) {
-            System.err.println("Error:********* " + ex);
+            if (log.isDebugEnabled()) {
+                log.debug("Error:********* " + ex);
+            }
             JOptionPane.showMessageDialog(null, "There is no connection. Offline mode.");
         }
     }

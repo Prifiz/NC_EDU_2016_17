@@ -13,10 +13,7 @@ import org.apache.log4j.Logger;
  */
 public class ServerHello implements Runnable {
     
-    /**
-     *
-     */
-    public static final Logger LOG=Logger.getLogger(ServerHello.class);
+    public static final Logger log=Logger.getLogger(ServerHello.class);
 
     private volatile boolean stopFlag;
 
@@ -58,6 +55,9 @@ public class ServerHello implements Runnable {
         System.out.println("Server is started");
         try {
             serverSocket = new ServerSocket(1234);
+            if (log.isDebugEnabled()) {
+                log.debug("ServerSocket on the port 1234 is created.");
+            }
             serverSocket.setSoTimeout(1 * 1000);
             Socket socket = null;
             System.out.println("Waiting first client..");
@@ -85,6 +85,9 @@ public class ServerHello implements Runnable {
         System.out.println("-----------------------");
 
         ServerHello server = new ServerHello();
+        if (log.isDebugEnabled()) {
+            log.debug("server object created.");
+        }
         Scanner sc = new Scanner(System.in);
         String command = "";
         System.out.println("Send command 'help' to show available commands.");
